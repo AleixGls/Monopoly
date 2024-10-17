@@ -324,40 +324,6 @@ lista_caselles = {
         },
     ]
 }
-
-casillas_ordenados = sorted(lista_caselles["normals"]+lista_caselles["especials"], key=lambda casilla: casilla["ID"])
-for i1 in range(7):
-    for i2 in range(7):
-        print("""
-+--------+--------+--------+--------+--------+--------+--------+
-|        |        |        |        |        |        |        |
-|        |        |        |        |        |        |        |
-+--------+--------+--------+--------+--------+--------+--------+
-|        |                                            |        |
-|        |                                            |        |
-+--------+                                            +--------+
-|        |                                            |        |
-|        |                                            |        |
-+--------+                                            +--------+
-|        |                                            |        |
-|        |                                            |        |
-+--------+                                            +--------+
-|        |                                            |        |
-|        |                                            |        |
-+--------+                                            +--------+
-|        |                                            |        |
-|        |                                            |        |
-+--------+--------+--------+--------+--------+--------+--------+
-|        |        |        |        |        |        |        |
-|        |        |        |        |        |        |        |
-+--------+--------+--------+--------+--------+--------+--------+
-""", end="")
-#|{casilla["nom curt"].ljust(8)}|
-
-
-#--------------------------------------------------------------------------------------------------
-
-
 # Info dreta --------------------------------------------------------------------------------------
 def infoDreta():
     jugadores_ordenados = sorted(jugadors.items(), key=lambda jugador: jugador[1]["torn"])
@@ -374,4 +340,35 @@ def infoDreta():
     Especial: {info['especial']}
             """)
 #--------------------------------------------------------------------------------------------------
+jugadores_ordenados = sorted(jugadors.items(), key=lambda jugador: jugador[1]["torn"])
+casillas_ordenados = sorted(lista_caselles["normals"]+lista_caselles["especials"], key=lambda casilla: casilla["ID"])
+
+print(f"""
++--------+--------+--------+--------+--------+--------+--------+ Banca:
+|{casillas_ordenados[12]["nom curt"].ljust(8," ")}|{casillas_ordenados[13]["nom curt"].ljust(8," ")}|{casillas_ordenados[14]["nom curt"].ljust(8," ")}|{casillas_ordenados[15]["nom curt"].ljust(8," ")}|{casillas_ordenados[16]["nom curt"].ljust(8," ")}|{casillas_ordenados[17]["nom curt"].ljust(8," ")}|{casillas_ordenados[18]["nom curt"].ljust(8," ")}| Diners: {jugadores_ordenados[0][1]["diner"]}
+|{"".ljust(8," ")}|{"".ljust(8," ")}|{"".ljust(8," ")}|{"".ljust(8," ")}|{"".ljust(8," ")}|{"".ljust(8," ")}|{"".ljust(8," ")}|
++--------+--------+--------+--------+--------+--------+--------+ Jugador {jugadores_ordenados[1][0]}:
+|{casillas_ordenados[11]["nom curt"].ljust(8," ")}|{"".center(44," ")}|{casillas_ordenados[19]["nom curt"].ljust(8," ")}| Carrers: {jugadores_ordenados[1][1]["carrers"]}
+|{"".ljust(8," ")}|{"".center(44," ")}|{"".ljust(8," ")}| Diners: {jugadores_ordenados[1][1]["diner"]}
++--------+{"".center(44," ")}+--------+ Especial: {jugadores_ordenados[1][1]["especial"]}
+|{casillas_ordenados[10]["nom curt"].ljust(8," ")}|{"".center(44," ")}|{casillas_ordenados[20]["nom curt"].ljust(8," ")}|
+|{"".ljust(8," ")}|{"".center(44," ")}|{"".ljust(8," ")}| Jugador {jugadores_ordenados[2][0]}:
++--------+{"".center(44," ")}+--------+ Carrers: {jugadores_ordenados[2][1]["carrers"]}
+|{casillas_ordenados[9]["nom curt"].ljust(8," ")}|{"".center(44," ")}|{casillas_ordenados[21]["nom curt"].ljust(8," ")}| Diners: {jugadores_ordenados[2][1]["diner"]}
+|{"".ljust(8," ")}|{"".center(44," ")}|{"".ljust(8," ")}| Especial: {jugadores_ordenados[2][1]["especial"]}
++--------+{"".center(44," ")}+--------+
+|{casillas_ordenados[8]["nom curt"].ljust(8," ")}|{"".center(44," ")}|{casillas_ordenados[22]["nom curt"].ljust(8," ")}| Jugador {jugadores_ordenados[3][0]}:
+|{"".ljust(8," ")}|{"".center(44," ")}|{"".ljust(8," ")}| Carrers: {jugadores_ordenados[3][1]["carrers"]}
++--------+{"".center(44," ")}+--------+ Diners: {jugadores_ordenados[3][1]["diner"]}
+|{casillas_ordenados[7]["nom curt"].ljust(8," ")}|{"".center(44," ")}|{casillas_ordenados[23]["nom curt"].ljust(8," ")}| Especial: {jugadores_ordenados[3][1]["especial"]}
+|{"".ljust(8," ")}|{"".center(44," ")}|{"".ljust(8," ")}| 
++--------+--------+--------+--------+--------+--------+--------+ Jugador {jugadores_ordenados[4][0]}:
+|{"".ljust(8," ")}|{"".ljust(8," ")}|{"".ljust(8," ")}|{"".ljust(8," ")}|{"".ljust(8," ")}|{"".ljust(8," ")}|{"".ljust(8," ")}| Carrers: {jugadores_ordenados[4][1]["carrers"]}
+|{casillas_ordenados[6]["nom curt"].ljust(8," ")}|{casillas_ordenados[5]["nom curt"].ljust(8," ")}|{casillas_ordenados[4]["nom curt"].ljust(8," ")}|{casillas_ordenados[3]["nom curt"].ljust(8," ")}|{casillas_ordenados[2]["nom curt"].ljust(8," ")}|{casillas_ordenados[1]["nom curt"].ljust(8," ")}|{casillas_ordenados[0]["nom curt"].ljust(8," ")}| Diners: {jugadores_ordenados[4][1]["diner"]}
++--------+--------+--------+--------+--------+--------+--------+ Especial: {jugadores_ordenados[4][1]["especial"]}
+""")
+
+
+#--------------------------------------------------------------------------------------------------
+
 
