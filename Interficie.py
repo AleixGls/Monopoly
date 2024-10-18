@@ -1,5 +1,6 @@
 from Dades import *
 
+# Funcions Auxiliars ------------------------------------------------------------------------------
 def MostrarCases(casella):
     if casella.get("nombre cases",0) != 0:
         return f"{casella["nombre cases"]}C"
@@ -48,6 +49,7 @@ def LiniaJugadorsFilesCentrals(casella1,casella2):
         liniaJugadors += f"{MostrarHotels(casella2)}{jugadorsAbreujats.ljust(7)}|"
     
     return liniaJugadors
+# -------------------------------------------------------------------------------------------------
 
 def Taulell():
     lstCasellesOrdenades = sorted(caselles["normals"]+caselles["especials"], key=lambda casilla: casilla["fil_col_taulell"])
