@@ -13,6 +13,10 @@ def Sortida(jugador):
 
 #--------------------------------------------------------------------------------------------------
 
+def RemplirDinersBanca():
+    if jugadors[0]["diner"] < 500000:
+        jugadors[0]["diner"] += 1000000
+
 # Randomitzar turn jugadors -----------------------------------------------------------------------
 def AleatoritzarOrdreTurns():
     lstJugadors = ["Groc","Taronja","Vermell","Blau"]
