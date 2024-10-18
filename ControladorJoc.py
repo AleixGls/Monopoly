@@ -20,6 +20,8 @@ def AleatoritzarOrdreTurns():
 
     for i,jug in enumerate(lstJugadors):
         jugadors[jug]["torn"] = i+1
+    
+    caselles["especials"][0]["jugadors"] = lstJugadors
 
 def IniciarJoc():
     AleatoritzarOrdreTurns()
