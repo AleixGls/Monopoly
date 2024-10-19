@@ -1,4 +1,5 @@
 from Dades import *
+import os
 
 # Funcions Auxiliars ------------------------------------------------------------------------------
 def MostrarCases(casella):
@@ -19,7 +20,7 @@ def LiniaNomsFilesCentrals(casella1,casella2):
     else: 
         liniaNoms += f"|{casella2["nom curt"].ljust(7)}{MostrarCases(casella1)}"
     
-    liniaNoms += "".ljust(44)
+    liniaNoms += "(Historial aquí)"
 
     if MostrarCases(casella2) == "": 
         liniaNoms += f"|{casella2["nom curt"].ljust(8)}|"
@@ -38,7 +39,7 @@ def LiniaJugadorsFilesCentrals(casella1,casella2):
     else: 
         liniaJugadors += f"{MostrarHotels(casella1)}{jugadorsAbreujats.ljust(7)}|"
     
-    liniaJugadors += "".ljust(44)
+    liniaJugadors += "(Historial aquí)"
 
     jugadorsAbreujats = ""
     for jugador in casella2["jugadors"]:
@@ -52,7 +53,7 @@ def LiniaJugadorsFilesCentrals(casella1,casella2):
 # -------------------------------------------------------------------------------------------------
 
 def Taulell():
-    lstCasellesOrdenades = sorted(caselles["normals"]+caselles["especials"], key=lambda casilla: casilla["fil_col_taulell"])
+    lstCasellesOrdenades = sorted(caselles, key=lambda casilla: casilla["fil_col_taulell"])
     matriuCasellesOrdenades = [
         lstCasellesOrdenades[:7],
         lstCasellesOrdenades[7:9],
@@ -88,7 +89,7 @@ def Taulell():
             lst.append("")
             liniaJugadors = "|".join(lst)
         else:
-            liniaVora = "+--------+"+"".ljust(44)+"+--------+"
+            liniaVora = "+--------+(Historial aquí)+--------+"
 
             casella1 = matriuCasellesOrdenades[fila][0]
             casella2 = matriuCasellesOrdenades[fila][1]
@@ -124,8 +125,32 @@ def InfoDreta():
     return lstStrInfoDreta
 #--------------------------------------------------------------------------------------------------
 
-def MostrarInterficie():
+historialJoc = ["".ljust(44) for _ in range(14)]
+
+def AfegirAHistorial(missatge):
+    historialJoc.append(missatge.ljust(44))
+    if len(historialJoc) >= 14:
+        historialJoc.pop(0)
+
+def InserirHistorialAlTaulell():
     taulell = Taulell()
+    taulellAmbHistorial = []
+    for i, liniaTaulell in enumerate(taulell):
+        liniaAmbHistorial = liniaTaulell
+        if 4<=i<=17:
+            liniaAmbHistorial = liniaAmbHistorial.replace("(Historial aquí)",historialJoc[i-4])
+        taulellAmbHistorial.append(liniaAmbHistorial)
+    return taulellAmbHistorial
+            
+def NetejarPantalla():
+    if os.name == 'nt':     # Windows
+        os.system('cls')
+    else:                   # Linux o macOS
+        os.system('clear')
+
+def MostrarInterficie():
+    NetejarPantalla()
+    taulellAmbHistorial = InserirHistorialAlTaulell()
     infoDreta = InfoDreta()
-    for liniaTaulell, liniaDreta in list(zip(taulell,infoDreta)):
+    for liniaTaulell, liniaDreta in list(zip(taulellAmbHistorial,infoDreta)):
         print(liniaTaulell+"   "+liniaDreta)
