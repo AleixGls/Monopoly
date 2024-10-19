@@ -73,14 +73,14 @@ def TrucDinersJugador(nomJugador, nDiners):
         if nomJugador.lower() in ["b","g","t","v"]:
             nomJugador = ["blau","groc","taronja","vermell"][["b","g","t","v"].index(nomJugador.lower())]
         nomJugador = nomJugador.capitalize()
-        jugadors[nomJugador]["diner"] = nDiners
+        jugadors[nomJugador]["diners"] = nDiners
         AfegirAHistorial(f"  Ara \"{nomJugador[0]}\" té {nDiners}€")
         return ""
     else: 
         return f"\"{nomJugador}\" no és un jugador vàlid."
 
 def TrucDinersBanca(nDiners):
-    jugadors["Banca"]["diner"] = nDiners
+    banca["diners"] = nDiners
     AfegirAHistorial(f"  Ara hi ha {nDiners}€ a la banca")
 
 def EscollirTrucs(IDCasellaActual, nomJugador):

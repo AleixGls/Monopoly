@@ -1,13 +1,8 @@
-jugadors = {
-    "Banca" : {
-        "diner" : 1000000,
-        "torn" : 0,
-        "carrers" : None,
-        "especial" : None,
-    },
+banca = {"diners" : 1000000}
 
+jugadors = {
     "Blau" : {
-        "diner" : 2000,
+        "diners" : 2000,
         "torn" : None,
         "carrers" : "(res)",
         "especial" : "(res)",
@@ -16,7 +11,7 @@ jugadors = {
         "torns_presoner": 0
     },
     "Groc" : {
-        "diner" : 2000,
+        "diners" : 2000,
         "torn" : None,
         "carrers" : "(res)",
         "especial" : "(res)",
@@ -25,7 +20,7 @@ jugadors = {
         "torns_presoner": 0
     },
     "Taronja" : {
-        "diner" : 2000,
+        "diners" : 2000,
         "torn" : None,
         "carrers" : "(res)",
         "especial" : "(res)",
@@ -34,7 +29,7 @@ jugadors = {
         "torns_presoner": 0
     },
     "Vermell" : {
-        "diner" : 2000,
+        "diners" : 2000,
         "torn" : None,
         "carrers" : "(res)",
         "especial" : "(res)",

@@ -90,14 +90,14 @@ def AleatoritzarOrdreTurns():
     random.shuffle(lstJugadors)
 
     for i,jug in enumerate(lstJugadors):
-        jugadors[jug]["torn"] = i+1
+        jugadors[jug]["torn"] = i
     
     caselles[0]["jugadors"] = lstJugadors.copy()
     return lstJugadors
 
 def RemplirDinersBanca():
-    if jugadors["Banca"]["diner"] < 500000:
-        jugadors["Banca"]["diner"] += 1000000
+    if banca["diners"] < 500000:
+        banca["diners"] += 1000000
 # -------------------------------------------------------------------------------------------------
 
 def IniciarJoc():
