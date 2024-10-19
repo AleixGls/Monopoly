@@ -18,7 +18,7 @@ def LiniaNomsFilesCentrals(casella1,casella2):
     if MostrarCases(casella1) == "": 
         liniaNoms += f"|{casella1["nom curt"].ljust(8)}|"
     else: 
-        liniaNoms += f"|{casella2["nom curt"].ljust(7)}{MostrarCases(casella1)}"
+        liniaNoms += f"|{casella1["nom curt"].ljust(7)}{MostrarCases(casella1)}"
     
     liniaNoms += "(Historial aquí)"
 
@@ -37,7 +37,7 @@ def LiniaJugadorsFilesCentrals(casella1,casella2):
     if MostrarHotels(casella1) == "": 
         liniaJugadors += f"|{jugadorsAbreujats.ljust(8)}|"
     else: 
-        liniaJugadors += f"{MostrarHotels(casella1)}{jugadorsAbreujats.ljust(7)}|"
+        liniaJugadors += f"|{jugadorsAbreujats.ljust(7)}{MostrarHotels(casella1)}"
     
     liniaJugadors += "(Historial aquí)"
 

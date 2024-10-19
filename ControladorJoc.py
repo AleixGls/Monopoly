@@ -4,6 +4,7 @@ from Interficie import AfegirAHistorial
 from Interficie import MostrarInterficie
 from FuncionsCasellesCarrer import *
 from FuncionsCasellesEspecials import *
+from Trucs import EscollirTrucs
 #--------------------------------------------------------------------------------------------------
 
 def MoureJugador(nomJugador):
@@ -44,39 +45,48 @@ def TornJugador(nomJugador):
     IDCasellaDesti = MoureJugador(nomJugador)
     MostrarInterficie()
 
-    if caselles[IDCasellaDesti]["tipus"] == "especial":
-        match caselles[IDCasellaDesti]["nom"]:
-            case "Sortida": Sortida(nomJugador)
-            case "Sort": Sort(nomJugador)
-            case "Preso": pass
-            case "Caixa": Caixa(nomJugador)
-            case "Parking": pass
-            case "Anar presó": AnarPreso(nomJugador)
-    else:
-        lstOpcions = CaureEnCasellaCarrer(IDCasellaDesti, nomJugador)
-        if len(lstOpcions) > 1:
-            while True:
-                print(f"Juga \"{nomJugador[0]}\", opcions: {", ".join(lstOpcions)}")
+    opcio = ""
+    while True:
+        if opcio and opcio != "trucs": break
+
+        if caselles[IDCasellaDesti]["tipus"] == "especial":
+            match caselles[IDCasellaDesti]["nom"]:
+                case "Sortida": Sortida(nomJugador)
+                case "Sort": Sort(nomJugador)
+                case "Preso": pass
+                case "Caixa": Caixa(nomJugador)
+                case "Parking": pass
+                case "Anar presó": AnarPreso(nomJugador)
+            break
+        else:
+            lstOpcions = CaureEnCasellaCarrer(IDCasellaDesti, nomJugador)
+            if len(lstOpcions) > 1:
                 while True:
-                    opcio = input("Escull una opció:")
-                    if opcio in lstOpcions: break
-                    print("Opció invàlida.")
-                match opcio:
-                    case "passar": break
-                    case "comprar terreny": ComprarTerreny(IDCasellaDesti,nomJugador); break
-                    case "comprar casa": ComprarCasa(IDCasellaDesti,nomJugador); break
-                    case "preus": Preus(IDCasellaDesti)
-                    case "preu banc": PreuBanc(nomJugador)
-                    case "preu jugador": PreuJugador(nomJugador)
-                    case "vendre al banc": VendreAlBanc(IDCasellaDesti, nomJugador); break
-                    case "vendre a B": VendreAJugador(IDCasellaDesti,nomJugador,"Blau"); break
-                    case "vendre a G": VendreAJugador(IDCasellaDesti,nomJugador,"Groc"); break
-                    case "vendre a T": VendreAJugador(IDCasellaDesti,nomJugador,"Taronja"); break
-                    case "vendre a V": VendreAJugador(IDCasellaDesti,nomJugador,"Vermell"); break
+                    print(f"Juga \"{nomJugador[0]}\", opcions: {", ".join(lstOpcions)}")
+                    while True:
+                        opcio = input("Escull una opció: ")
+                        if opcio in lstOpcions or opcio == "trucs": break
+                        MostrarInterficie()
+                        print("Opció invàlida.")
+                    match opcio:
+                        case "passar": break
+                        case "comprar terreny": ComprarTerreny(IDCasellaDesti,nomJugador); break
+                        case "comprar casa": ComprarCasa(IDCasellaDesti,nomJugador); break
+                        case "preus": Preus(IDCasellaDesti)
+                        case "preu banc": PreuBanc(nomJugador)
+                        case "preu jugador": PreuJugador(nomJugador)
+                        case "vendre al banc": VendreAlBanc(IDCasellaDesti, nomJugador); break
+                        case "vendre a B": VendreAJugador(IDCasellaDesti,nomJugador,"Blau"); break
+                        case "vendre a G": VendreAJugador(IDCasellaDesti,nomJugador,"Groc"); break
+                        case "vendre a T": VendreAJugador(IDCasellaDesti,nomJugador,"Taronja"); break
+                        case "vendre a V": VendreAJugador(IDCasellaDesti,nomJugador,"Vermell"); break
+                        case "trucs": 
+                            EscollirTrucs(IDCasellaDesti,nomJugador)
+                            IDCasellaDesti = jugadors[nomJugador]["ID_casella"]; break
 
 # Funcions auxiliars ------------------------------------------------------------------------------
 def AleatoritzarOrdreTurns():
-    lstJugadors = ["Groc","Taronja","Vermell","Blau"]
+    lstJugadors = ["Blau","Groc","Taronja","Vermell"]
     random.shuffle(lstJugadors)
 
     for i,jug in enumerate(lstJugadors):
