@@ -93,6 +93,7 @@ def AleatoritzarOrdreTurns():
         jugadors[jug]["torn"] = i
     
     caselles[0]["jugadors"] = lstJugadors.copy()
+    return lstJugadors
 
 def RemplirDinersBanca():
     if altresDades["diners banca"] < 500000:
@@ -100,12 +101,12 @@ def RemplirDinersBanca():
 # -------------------------------------------------------------------------------------------------
 
 def IniciarJoc():
-    AleatoritzarOrdreTurns()
+    lstJugadors = AleatoritzarOrdreTurns()
 
     while True:
-        for jugador, info in jugadors.items():
-            if info["torn"] == altresDades["torn actual"]:
-                TornJugador(jugador); break
+        for nomJugador in lstJugadors:
+            if jugadors[nomJugador]["torn"] == altresDades["torn actual"]:
+                TornJugador(nomJugador); break
         altresDades["torn actual"] += 1
         if altresDades["torn actual"] == 4: altresDades["torn actual"] = 0
         RemplirDinersBanca()

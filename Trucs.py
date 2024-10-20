@@ -62,7 +62,7 @@ def TrucSeguentJugador(nomJugador):
 
         for jugador, info in jugadors.items():
             if jugador == nomJugador:
-                altresDades["torn actual"] = info["torn"] - 1
+                altresDades["torn actual"] = info["torn"] - 1; break
 
         AfegirAHistorial(f"  \"{nomJugador[0]}\" serà el següent jugador.")
         return ""
