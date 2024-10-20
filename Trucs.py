@@ -1,4 +1,3 @@
-import random
 import re
 from Dades import *
 from Interficie import AfegirAHistorial
@@ -61,9 +60,11 @@ def TrucSeguentJugador(nomJugador):
             nomJugador = ["blau","groc","taronja","vermell"][["b","g","t","v"].index(nomJugador.lower())]
         nomJugador = nomJugador.capitalize()
 
-        pass
+        for jugador, info in jugadors.items():
+            if jugador == nomJugador:
+                altresDades["torn actual"] = info["torn"] - 1
 
-        AfegirAHistorial(f"  El següent jugador serà {nomJugador}.")
+        AfegirAHistorial(f"  \"{nomJugador[0]}\" serà el següent jugador.")
         return ""
     else: 
         return f"\"{nomJugador}\" no és un jugador vàlid."
@@ -80,7 +81,7 @@ def TrucDinersJugador(nomJugador, nDiners):
         return f"\"{nomJugador}\" no és un jugador vàlid."
 
 def TrucDinersBanca(nDiners):
-    banca["diners"] = nDiners
+    altresDades["diners banca"] = nDiners
     AfegirAHistorial(f"  Ara hi ha {nDiners}€ a la banca")
 
 def EscollirTrucs(IDCasellaActual, nomJugador):

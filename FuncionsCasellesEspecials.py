@@ -4,8 +4,8 @@ from Interficie import MostrarInterficie
 #--------------------------------------------------------------------------------------------------
 
 def Sortida(nomJugador):
-    jugadors["Banca"]["diner"] -= 200
-    jugadors[nomJugador]["diner"] += 200
+    altresDades["diners banca"] -= 200
+    jugadors[nomJugador]["diners"] += 200
 def Sort(nomJugador):
     pass
 def Caixa(nomJugador):

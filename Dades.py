@@ -1,4 +1,4 @@
-banca = {"diners" : 1000000}
+altresDades = {"diners banca": 1000000, "torn actual": 0}
 
 jugadors = {
     "Blau" : {

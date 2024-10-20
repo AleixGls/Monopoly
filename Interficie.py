@@ -115,7 +115,7 @@ def Taulell():
 # Info dreta --------------------------------------------------------------------------------------
 def InfoDreta():
     lstStrInfoDreta = []
-    lstStrInfoDreta.extend([f"Banca:", f"Diners: {banca['diners']}€",""])
+    lstStrInfoDreta.extend([f"Banca:", f"Diners: {altresDades["diners banca"]}€",""])
 
     jugadorsOrdenats = sorted(jugadors.items(), key=lambda jugador: jugador[1]["torn"])
 
