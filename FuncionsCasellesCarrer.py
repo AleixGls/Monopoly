@@ -29,14 +29,29 @@ def Preus(IDCasella):
     MostrarInterficie()
 
 def CalculPreuBanc(nomJugador): # Funció auxiliar
-    pass
+    preu = 0
+    for carrer in jugadors[nomJugador]["carrers"]:
+        for casella in caselles:
+            if casella["nom"] == carrer:
+                c = casella
+                preu += (c["lloguer casa"] * c["nombre cases"] + c["lloguer hotel"] * c["nombre hotels"]) * 0.5
+    return preu
 def PreuBanc(nomJugador):
-    pass
+    AfegirAHistorial(f"  Si vens les teves propietats al banc guanyaras: {CalculPreuBanc(nomJugador)}€")
     MostrarInterficie()
+
 def CalculPreuJugador(nomJugador): # Funció auxiliar
-    pass
+    preu = 0
+    for carrer in jugadors[nomJugador]["carrers"]:
+        for casella in caselles:
+            if casella["nom"] == carrer:
+                c = casella
+                preu += (c["lloguer casa"] * c["nombre cases"] + c["lloguer hotel"] * c["nombre hotels"]) * 0.9
+    return preu
 def PreuJugador(nomJugador):
-    pass
+    for jugador in jugadors:
+        if jugador != nomJugador:
+            AfegirAHistorial(f"  Si vens les teves propietats a \"{jugador[0]}\" guanyaras: {min(CalculPreuBanc(nomJugador),jugador["diners"])}€")
     MostrarInterficie()
 
 def VendreAlBanc(IDCasella, nomJugador):
