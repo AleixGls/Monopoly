@@ -51,7 +51,6 @@ def LiniaJugadorsFilesCentrals(casella1,casella2):
     
     return liniaJugadors
 # -------------------------------------------------------------------------------------------------
-
 def Taulell():
     lstCasellesOrdenades = sorted(caselles, key=lambda casilla: casilla["fil_col_taulell"])
     matriuCasellesOrdenades = [
@@ -108,11 +107,7 @@ def Taulell():
     lstStrTaulell.append("--------".join("++++++++"))
 
     return lstStrTaulell
-
 #--------------------------------------------------------------------------------------------------
-
-
-# Info dreta --------------------------------------------------------------------------------------
 def InfoDreta():
     lstStrInfoDreta = []
     lstStrInfoDreta.extend([f"Banca:", f"Diners: {altresDades["diners banca"]}€",""])
@@ -120,7 +115,11 @@ def InfoDreta():
     jugadorsOrdenats = sorted(jugadors.items(), key=lambda jugador: jugador[1]["torn"])
 
     for jugador, info in jugadorsOrdenats:
-        lstStrInfoDreta.extend([f"Jugador {jugador}:", f"Carrers: {info['carrers']}", f"Diners: {info['diners']}€", f"Especial: {info['especial']}",""])
+        if info['carrers'] == []: carrers = "(res)"
+        else: carrers = ", ".join(info['carrers'])
+        if info['especial'] == []: especial = "(res)"
+        else: especial = ", ".join(info['carrers'])
+        lstStrInfoDreta.extend([f"Jugador {jugador}:", f"Carrers: {carrers}", f"Diners: {info['diners']}€", f"Especial: {especial}",""])
     return lstStrInfoDreta
 #--------------------------------------------------------------------------------------------------
 

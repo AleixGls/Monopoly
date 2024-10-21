@@ -4,8 +4,8 @@ jugadors = {
     "Blau" : {
         "diners" : 2000,
         "torn" : None,
-        "carrers" : "(res)",
-        "especial" : "(res)",
+        "carrers" : [],
+        "especial" : [],
         "ID_casella" : 0,
         "és_presoner": False,
         "torns_presoner": 0
@@ -13,8 +13,8 @@ jugadors = {
     "Groc" : {
         "diners" : 2000,
         "torn" : None,
-        "carrers" : "(res)",
-        "especial" : "(res)",
+        "carrers" : [],
+        "especial" : [],
         "ID_casella" : 0,
         "és_presoner": False,
         "torns_presoner": 0
@@ -22,8 +22,8 @@ jugadors = {
     "Taronja" : {
         "diners" : 2000,
         "torn" : None,
-        "carrers" : "(res)",
-        "especial" : "(res)",
+        "carrers" : [],
+        "especial" : [],
         "ID_casella" : 0,
         "és_presoner": False,
         "torns_presoner": 0
@@ -31,8 +31,8 @@ jugadors = {
     "Vermell" : {
         "diners" : 2000,
         "torn" : None,
-        "carrers" : "(res)",
-        "especial" : "(res)",
+        "carrers" : [],
+        "especial" : [],
         "ID_casella" : 0,
         "és_presoner": False,
         "torns_presoner": 0
@@ -263,7 +263,7 @@ caselles = [
         "fil_col_taulell": [0,5]
     },
     {
-        "nom":"Anar preso",
+        "nom":"Anar presó",
         "nom curt":"Anr pró",
         "tipus": "especial",
         "funcio": "AnarPreso",

@@ -31,6 +31,7 @@ def TrucAfegirCases(IDCasellaActual, nCases):
         nCasesMax = 4 - caselles[IDCasellaActual]["nombre cases"]
         if 1 <= nCases <= nCasesMax:
             caselles[IDCasellaActual]["nombre cases"] += nCases
+            AfegirAHistorial(f"  Cases afegides a {caselles[IDCasellaActual]["nom"]}: {nCases}")
             return ""
         elif nCases == 0: return f"El nombre de cases per afegir ha de ser entre 1 i {nCasesMax}." 
         else:
@@ -46,6 +47,7 @@ def TrucAfegirHotels(IDCasellaActual, nHotels):
         nHotelsMax = 2 - caselles[IDCasellaActual]["nombre hotels"]
         if 1 <= nHotels <= nHotelsMax:
             caselles[IDCasellaActual]["nombre hotels"] += nHotels
+            AfegirAHistorial(f"  Hotels afegits a {caselles[IDCasellaActual]["nom"]}: {nHotels}")
             return ""
         elif nHotels == 0: return f"El nombre d'hotels per afegir ha de ser entre 1 i {nHotelsMax}." 
         else:
@@ -64,7 +66,7 @@ def TrucSeguentJugador(nomJugador):
             if jugador == nomJugador:
                 altresDades["torn actual"] = info["torn"] - 1; break
 
-        AfegirAHistorial(f"  \"{nomJugador[0]}\" serà el següent jugador.")
+        AfegirAHistorial(f"  \"{nomJugador[0]}\" serà el següent jugador")
         return ""
     else: 
         return f"\"{nomJugador}\" no és un jugador vàlid."
@@ -85,7 +87,7 @@ def TrucDinersBanca(nDiners):
     AfegirAHistorial(f"  Ara hi ha {nDiners}€ a la banca")
 
 def EscollirTrucs(IDCasellaActual, nomJugador):
-    lstTrucs = [r'anar a (\w+( \w+)*)', r'afegir (\d+) cases', r'afegir (\d+) hotels', r'seguent (\w+)', r'diners (\w+) (\d+)', r'diners (\d+) banca', r'acabar']
+    lstTrucs = [r'anar a (\w+(.? \w+)*)', r'afegir (\d+) cases', r'afegir (\d+) hotels', r'seguent (\w+)', r'diners (\w+) (\d+)', r'diners (\d+) banca', r'acabar']
     AfegirAHistorial(f"  \"{nomJugador[0]}\" fa trampes")
 
     missatgeError = ""
@@ -107,7 +109,7 @@ def EscollirTrucs(IDCasellaActual, nomJugador):
             match IDTruc:
                 case 0:
                     nomCasellaDesti = patroCoincident.group(1)
-                    TrucAnarA(IDCasellaActual, nomJugador, nomCasellaDesti)
+                    missatgeError = TrucAnarA(IDCasellaActual, nomJugador, nomCasellaDesti)
                     IDCasellaActual = jugadors[nomJugador]["ID_casella"]
                 case 1:
                     nCases = int(patroCoincident.group(1))
