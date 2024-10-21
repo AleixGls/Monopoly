@@ -46,8 +46,7 @@ def CaureEnCasellaCarrer(IDCasella, nomJugador):
         lstOpcions.append("preus")
     
     else:
-        preuBase = c["lloguer hotel"]
-        pagament = preuBase + c["lloguer casa"] * c["nombre cases"] + c["lloguer hotel"] * c["nombre hotels"]
+        pagament = c["lloguer casa"] * c["nombre cases"] + c["lloguer hotel"] * c["nombre hotels"]
 
         if jug["diners"] > pagament:
             jugadors[nomJugador]["diners"] -= pagament
