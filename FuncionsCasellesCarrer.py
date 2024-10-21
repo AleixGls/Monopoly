@@ -7,7 +7,7 @@ def ComprarTerreny(IDCasella, nomJugador):
     c = caselles[IDCasella]
     preu = c["comprar terreny"]
     caselles[IDCasella]["propietari"] = nomJugador
-    jugadors[nomJugador]["carrers"] += c["nom"]
+    jugadors[nomJugador]["carrers"].append(c["nom"])
     jugadors[nomJugador]["diners"] -= preu
     altresDades["diners banca"] += preu
     AfegirAHistorial(f"  \"{nomJugador[0]}\" compra el terreny")
@@ -82,7 +82,10 @@ def CaureEnCasellaCarrer(IDCasella, nomJugador):
     jug = jugadors[nomJugador]
 
     if c["propietari"] == "Banca":
-        lstOpcions = ["passar","comprar terreny","preus"]
+        lstOpcions = ["passar"]
+        if jug["diners"] > c["comprar terreny"]:
+            lstOpcions.append("comprar terreny")
+        lstOpcions.append("preus")
     
     elif c["propietari"] == nomJugador:
         lstOpcions = ["passar"]

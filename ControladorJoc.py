@@ -93,6 +93,7 @@ def TornJugador(nomJugador):
                 input(f"\"{nomJugador[0]}\", has de declarar bancarrota. (polsa Intro)")
                 DeclararBancarrota(IDCasellaDesti, nomJugador)
                 break
+            else: break
 
 # Funcions auxiliars ------------------------------------------------------------------------------
 def AleatoritzarOrdreTurns():
