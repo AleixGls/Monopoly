@@ -24,37 +24,27 @@ def TrucAnarA(IDCasellaActual, nomJugador, nomCasellaDesti):
     
     return f"  {nomCasellaDesti} no és una casella vàlida."
 
-def TrucAfegirCases(IDCasellaActual, nCases):
+def TrucFixarCases(IDCasellaActual, nCases):
     if caselles[IDCasellaActual]["tipus"] == "especial":
         return "No es poden afegir cases a una casella especial."
-    else:
-        nCasesMax = 4 - caselles[IDCasellaActual]["nombre cases"]
-        if 1 <= nCases <= nCasesMax:
-            caselles[IDCasellaActual]["nombre cases"] += nCases
-            AfegirAHistorial(f"  Cases afegides a {caselles[IDCasellaActual]["nom"]}: {nCases}")
-            return ""
-        elif nCases == 0: return f"El nombre de cases per afegir ha de ser entre 1 i {nCasesMax}." 
-        else:
-            match nCasesMax:
-                case 0: return "No es poden afegir més cases."
-                case 1: return f"Només es pot afegir 1 casa més, no pas {nCases} cases."
-                case _: return f"El nombre de cases per afegir ha de ser entre 1 i {nCasesMax}." 
+    elif 1 <= nCases <= 4:
+        caselles[IDCasellaActual]["nombre cases"] = nCases
+        pluralFix = "cases"
+        if nCases == 1: pluralFix = "casa"
+        AfegirAHistorial(f"  Ara {caselles[IDCasellaActual]["nom"]} té {nCases} {pluralFix}.")
+        return ""
+    else: return f"El nombre de cases ha de ser entre 1 i 4." 
 
-def TrucAfegirHotels(IDCasellaActual, nHotels):
+def TrucFixarHotels(IDCasellaActual, nHotels):
     if caselles[IDCasellaActual]["tipus"] == "especial":
         return "No es poden afegir hotels a una casella especial."
-    else:
-        nHotelsMax = 2 - caselles[IDCasellaActual]["nombre hotels"]
-        if 1 <= nHotels <= nHotelsMax:
-            caselles[IDCasellaActual]["nombre hotels"] += nHotels
-            AfegirAHistorial(f"  Hotels afegits a {caselles[IDCasellaActual]["nom"]}: {nHotels}")
-            return ""
-        elif nHotels == 0: return f"El nombre d'hotels per afegir ha de ser entre 1 i {nHotelsMax}." 
-        else:
-            match nHotelsMax:
-                case 0: return "No es poden afegir més hotels."
-                case 1: return f"Només es pot afegir 1 hotel més, no pas {nHotels} hotels."
-                case _: return f"El nombre d'hotels per afegir ha de ser o bé 1 o bé 2." 
+    elif 1 <= nHotels <= 4:
+        caselles[IDCasellaActual]["nombre hotels"] = nHotels
+        pluralFix = "hotels"
+        if nHotels == 1: pluralFix = "hotel"
+        AfegirAHistorial(f"  Ara {caselles[IDCasellaActual]["nom"]} té {nHotels} {pluralFix}.")
+        return ""
+    else: return f"El nombre de hotels ha de ser entre 1 i 4." 
 
 def TrucSeguentJugador(nomJugador):
     if re.fullmatch(r'(b(lau)?)|(g(roc)?)|(t(aronja)?)|(v(ermell)?)',nomJugador.lower()):
@@ -90,7 +80,7 @@ def TrucDinersBanca(nDiners):
     AfegirAHistorial(f"  Ara hi ha {nDiners}€ a la banca")
 
 def EscollirTrucs(IDCasellaActual, nomJugador):
-    lstTrucs = [r'anar a (\w+(.? \w+)*)', r'afegir (\d+) cases', r'afegir (\d+) hotels', r'seguent (\w+)', r'diners (\w+) (\d+)', r'diners (\d+) banca', r'acabar']
+    lstTrucs = [r'anar a (\w+(.? \w+)*)', r'fixar nombre de cases a (\d+)', r'fixar nombre d\'hotels a (\d+)', r'seguent (\w+)', r'diners (\w+) (\d+)', r'diners (\d+) banca', r'acabar']
     AfegirAHistorial(f"  \"{nomJugador[0]}\" fa trampes")
 
     missatgeError = ""
@@ -116,10 +106,10 @@ def EscollirTrucs(IDCasellaActual, nomJugador):
                     IDCasellaActual = jugadors[nomJugador]["ID_casella"]
                 case 1:
                     nCases = int(patroCoincident.group(1))
-                    missatgeError = TrucAfegirCases(IDCasellaActual,nCases)
+                    missatgeError = TrucFixarCases(IDCasellaActual,nCases)
                 case 2:
                     nHotels = int(patroCoincident.group(1))
-                    missatgeError = TrucAfegirHotels(IDCasellaActual,nHotels)
+                    missatgeError = TrucFixarHotels(IDCasellaActual,nHotels)
                 case 3:
                     nomJugadorSeguent = patroCoincident.group(1)
                     missatgeError = TrucSeguentJugador(nomJugadorSeguent)
