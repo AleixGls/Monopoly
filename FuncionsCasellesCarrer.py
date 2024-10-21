@@ -15,11 +15,13 @@ def ComprarCasa(IDCasella, nomJugador):
     preu = caselles[IDCasella]["comprar casa"]
     jugadors[nomJugador]["diners"] -= preu
     altresDades["diners banca"] += preu
+    caselles[IDCasella]["nombre cases"] += 1
     AfegirAHistorial(f"  \"{nomJugador[0]}\" compra 1 casa")
 def ComprarHotel(IDCasella, nomJugador):
     preu = caselles[IDCasella]["comprar hotel"]
     jugadors[nomJugador]["diners"] -= preu
     altresDades["diners banca"] += preu
+    caselles[IDCasella]["nombre hotels"] += 1
     AfegirAHistorial(f"  \"{nomJugador[0]}\" compra 1 hotel")
 
 def Preus(IDCasella):
@@ -37,7 +39,7 @@ def CalculPreuBanc(nomJugador): # Funció auxiliar
                 preu += (c["lloguer casa"] * c["nombre cases"] + c["lloguer hotel"] * c["nombre hotels"]) * 0.5
     return preu
 def PreuBanc(nomJugador):
-    AfegirAHistorial(f"  Si vens les teves propietats al banc guanyaras: {CalculPreuBanc(nomJugador)}€")
+    AfegirAHistorial(f"  Si vens tot al banc guanyaràs {CalculPreuBanc(nomJugador)}€")
     MostrarInterficie()
 
 def CalculPreuJugador(nomJugador): # Funció auxiliar
@@ -51,7 +53,7 @@ def CalculPreuJugador(nomJugador): # Funció auxiliar
 def PreuJugador(nomJugador):
     for jugador in jugadors:
         if jugador != nomJugador:
-            AfegirAHistorial(f"  Si vens les teves propietats a \"{jugador[0]}\" guanyaras: {min(CalculPreuBanc(nomJugador),jugador["diners"])}€")
+            AfegirAHistorial(f"  Si vens tot a \"{jugador[0]}\" guanyaràs {min(CalculPreuBanc(nomJugador),jugador["diners"])}€")
     MostrarInterficie()
 
 def VendreAlBanc(IDCasella, nomJugador):
