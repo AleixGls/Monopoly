@@ -97,33 +97,33 @@ def CaureEnCasellaCarrer(IDCasella, nomJugador):
     
     else:
         pagament = c["lloguer casa"] * c["nombre cases"] + c["lloguer hotel"] * c["nombre hotels"]
-
-        if jug["diners"] > pagament:
-            jugadors[nomJugador]["diners"] -= pagament
-            jugadors[c["propietari"]]["diners"] += pagament
-            AfegirAHistorial(f"  \"{nomJugador[0]}\" paga {pagament}€ a \"{c["propietari"][0]}\"")
-            lstOpcions = []
-        else:
-            AfegirAHistorial(f"  \"{nomJugador[0]}\" ha de pagar {pagament}€ a \"{c["propietari"][0]}\"")
-            AfegirAHistorial(f"  \"{nomJugador[0]}\" no té prou diners")
-
-            lstJugsCompradorsPossibles = []
-            for jugadorComprador in jugadors:
-                    if jugadorComprador != nomJugador and jugadors[jugadorComprador]["diners"] + jug["diners"] > pagament:
-                        lstJugsCompradorsPossibles.append(jugador)
-            
-            if (CalculPreuBanc(nomJugador) + jug["diners"]) > pagament:
-                lstOpcions = ["preu banc","preu jugador","vendre al banc"]
-                for jugador in lstJugsCompradorsPossibles:
-                    lstOpcions.append(f"vendre a {jugador}")
-            elif (CalculPreuJugador(nomJugador) + jug["diners"]) > pagament and lstJugsCompradorsPossibles:
-                AfegirAHistorial(f"  Vendre tot al banc no és prou per pagar")
-                lstOpcions = ["preu jugador"]
-                for jugador in lstJugsCompradorsPossibles:
-                    lstOpcions.append(f"vendre a {jugador}")
+        if pagament > 0:
+            if jug["diners"] > pagament:
+                jugadors[nomJugador]["diners"] -= pagament
+                jugadors[c["propietari"]]["diners"] += pagament
+                AfegirAHistorial(f"  \"{nomJugador[0]}\" paga {pagament}€ a \"{c["propietari"][0]}\"")
+                lstOpcions = []
             else:
-                AfegirAHistorial(f"  Fins i tot venent tot a un altre jugador,")
-                AfegirAHistorial(f"  \"{nomJugador[0]}\" no pot pagar")
-                lstOpcions = ["declarar bancarrota"]
+                AfegirAHistorial(f"  \"{nomJugador[0]}\" ha de pagar {pagament}€ a \"{c["propietari"][0]}\"")
+                AfegirAHistorial(f"  \"{nomJugador[0]}\" no té prou diners")
+
+                lstJugsCompradorsPossibles = []
+                for jugadorComprador in jugadors:
+                        if jugadorComprador != nomJugador and jugadors[jugadorComprador]["diners"] + jug["diners"] > pagament:
+                            lstJugsCompradorsPossibles.append(jugador)
+                
+                if (CalculPreuBanc(nomJugador) + jug["diners"]) > pagament:
+                    lstOpcions = ["preu banc","preu jugador","vendre al banc"]
+                    for jugador in lstJugsCompradorsPossibles:
+                        lstOpcions.append(f"vendre a {jugador}")
+                elif (CalculPreuJugador(nomJugador) + jug["diners"]) > pagament and lstJugsCompradorsPossibles:
+                    AfegirAHistorial(f"  Vendre tot al banc no és prou per pagar")
+                    lstOpcions = ["preu jugador"]
+                    for jugador in lstJugsCompradorsPossibles:
+                        lstOpcions.append(f"vendre a {jugador}")
+                else:
+                    AfegirAHistorial(f"  Fins i tot venent tot a un altre jugador,")
+                    AfegirAHistorial(f"  \"{nomJugador[0]}\" no pot pagar")
+                    lstOpcions = ["declarar bancarrota"]
 
     return lstOpcions
