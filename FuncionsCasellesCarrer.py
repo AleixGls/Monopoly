@@ -4,11 +4,18 @@ from Interficie import MostrarInterficie
 #--------------------------------------------------------------------------------------------------
 
 def ComprarTerreny(IDCasella, nomJugador):
-    pass
+    preu = caselles[IDCasella]["comprar terreny"]
+    caselles[IDCasella]["propietari"] = nomJugador
+    jugadors[nomJugador]["diners"] -= preu
+    altresDades["diners banca"] += preu
 def ComprarCasa(IDCasella, nomJugador):
-    pass
+    preu = caselles[IDCasella]["comprar casa"]
+    jugadors[nomJugador]["diners"] -= preu
+    altresDades["diners banca"] += preu
 def ComprarHotel(IDCasella, nomJugador):
-    pass
+    preu = caselles[IDCasella]["comprar hotel"]
+    jugadors[nomJugador]["diners"] -= preu
+    altresDades["diners banca"] += preu
 
 def Preus(IDCasella):
     pass
