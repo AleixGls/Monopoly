@@ -79,7 +79,7 @@ def TrucDinersJugador(nomJugador, nDiners):
         if nDiners > 0:
             jugadors[nomJugador]["diners"] = nDiners
         else:
-            return "Els diners no poden tenir un valor negatiu."
+            return "ERROR: Els diners no poden tenir un valor negatiu."
         AfegirAHistorial(f"  Ara \"{nomJugador[0]}\" té {nDiners}€")
         return ""
     else: 
