@@ -67,7 +67,10 @@ def TrucDinersJugador(nomJugador, nDiners):
             nomJugador = ["blau","groc","taronja","vermell"][["b","g","t","v"].index(nomJugador.lower())]
         nomJugador = nomJugador.capitalize()
         if nDiners >= 0:
-            jugadors[nomJugador]["diners"] = nDiners
+            if jugadors[nomJugador]["diners"] == "BANCARROTA":
+                return "No es pot canviar els diners d'un jugador en bancarrota."
+            else:
+                jugadors[nomJugador]["diners"] = nDiners
         else:
             return "ERROR: Els diners no poden tenir un valor negatiu."
         AfegirAHistorial(f"  Ara \"{nomJugador[0]}\" té {nDiners}€")

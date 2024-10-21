@@ -10,7 +10,9 @@ from Trucs import EscollirTrucs
 def DeclararBancarrota(IDCasella, nomJugador):
     AfegirAHistorial(f"  \"{nomJugador}\" declara bancarrota")
     VendreAlBanc(IDCasella, nomJugador, bancarrota = True)
+    jugadors[nomJugador]["carrers"] = ["BANCARROTA"]
     jugadors[nomJugador]["diners"] = "BANCARROTA"
+    jugadors[nomJugador]["especial"] = ["BANCARROTA"]
     lstJugadors.remove(nomJugador)
 
 def MoureJugador(nomJugador):

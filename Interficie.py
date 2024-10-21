@@ -119,7 +119,9 @@ def InfoDreta():
         else: carrers = ", ".join(info['carrers'])
         if info['especial'] == []: especial = "(res)"
         else: especial = ", ".join(info['especial'])
-        lstStrInfoDreta.extend([f"Jugador {jugador}:", f"Carrers: {carrers}", f"Diners: {info['diners']}€", f"Especial: {especial}",""])
+        if info['diners'] == "BANCARROTA": diners = "BANCARROTA"
+        else: diners = f"{info['diners']}€"
+        lstStrInfoDreta.extend([f"Jugador {jugador}:", f"Carrers: {carrers}", f"Diners: {diners}", f"Especial: {especial}",""])
     return lstStrInfoDreta
 #--------------------------------------------------------------------------------------------------
 
