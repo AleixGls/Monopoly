@@ -76,7 +76,10 @@ def TrucDinersJugador(nomJugador, nDiners):
         if nomJugador.lower() in ["b","g","t","v"]:
             nomJugador = ["blau","groc","taronja","vermell"][["b","g","t","v"].index(nomJugador.lower())]
         nomJugador = nomJugador.capitalize()
-        jugadors[nomJugador]["diners"] = nDiners
+        if nDiners > 0:
+            jugadors[nomJugador]["diners"] = nDiners
+        else:
+            return "Els diners no poden tenir un valor negatiu."
         AfegirAHistorial(f"  Ara \"{nomJugador[0]}\" té {nDiners}€")
         return ""
     else: 
