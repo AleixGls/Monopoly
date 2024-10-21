@@ -44,25 +44,38 @@ def VendreAlBanc(IDCasella, nomJugador):
     for carrer in jugadors[nomJugador]["carrers"]:
         for casella in caselles:
             if casella["nom"] == carrer:
-                cCarrer = caselles[caselles.index(casella)]
                 caselles[caselles.index(casella)]["propietari"] = "Banca"
                 caselles[caselles.index(casella)]["nombre cases"] = 0
                 caselles[caselles.index(casella)]["nombre hotels"] = 0
-                preu = (cCarrer["comprar terreny"] + c["comprar casa"] * c["nombre cases"] + c["comprar hotel"] * c["nombre hotels"]) * 0.5
-                altresDades["diners banca"] -= preu
-                jugadors[nomJugador]["diners"] += preu
-                break
-    AfegirAHistorial(f"  \"{nomJugador[0]}\" ven les seves propietats al banc")
+
+    preuVentaBanc = CalculPreuBanc(nomJugador)
+    altresDades["diners banca"] -= preuVentaBanc
+    jugadors[nomJugador]["diners"] += preuVentaBanc
+    AfegirAHistorial(f"  \"{nomJugador[0]}\" ven tot al banc per {preuVentaBanc}€")
 
     jugadors[nomJugador]["diners"] -= pagament
     jugadors[c["propietari"]]["diners"] += pagament
     AfegirAHistorial(f"  \"{nomJugador[0]}\" paga {pagament}€ a \"{c["propietari"][0]}\"")
     
-    pass
 def VendreAJugador(IDCasella,nomJugadorVenedor,nomJugadorComprador):
     c = caselles[IDCasella]
     pagament = c["lloguer casa"] * c["nombre cases"] + c["lloguer hotel"] * c["nombre hotels"]
-    pass
+
+    for carrer in jugadors[nomJugadorVenedor]["carrers"]:
+        for casella in caselles:
+            if casella["nom"] == carrer:
+                caselles[caselles.index(casella)]["propietari"] = nomJugadorComprador
+                caselles[caselles.index(casella)]["nombre cases"] = 0
+                caselles[caselles.index(casella)]["nombre hotels"] = 0
+
+    preuVentaJugador = min(CalculPreuJugador(nomJugadorVenedor),jugadors[nomJugadorComprador]["diners"])
+    altresDades["diners banca"] -= preuVentaJugador
+    jugadors[nomJugadorVenedor]["diners"] += preuVentaJugador
+    AfegirAHistorial(f"  \"{nomJugadorVenedor[0]}\" ven tot a \"{nomJugadorComprador[0]}\" per {preuVentaJugador}€")
+
+    jugadors[nomJugadorVenedor]["diners"] -= pagament
+    jugadors[c["propietari"]]["diners"] += pagament
+    AfegirAHistorial(f"  \"{nomJugadorVenedor[0]}\" paga {pagament}€ a \"{c["propietari"][0]}\"")
 
 def CaureEnCasellaCarrer(IDCasella, nomJugador):
     c = caselles[IDCasella]
