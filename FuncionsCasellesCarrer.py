@@ -23,7 +23,9 @@ def ComprarHotel(IDCasella, nomJugador):
     AfegirAHistorial(f"  \"{nomJugador[0]}\" compra 1 hotel")
 
 def Preus(IDCasella):
-    pass
+    c = caselles[IDCasella]
+    AfegirAHistorial(f"  Preu casa: {c["comprar casa"]}")
+    AfegirAHistorial(f"  Preu casa: {c["comprar hotel"]}")
     MostrarInterficie()
 
 def CalculPreuBanc(nomJugador): # Funció auxiliar
