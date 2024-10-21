@@ -66,7 +66,7 @@ def TrucDinersJugador(nomJugador, nDiners):
         if nomJugador.lower() in ["b","g","t","v"]:
             nomJugador = ["blau","groc","taronja","vermell"][["b","g","t","v"].index(nomJugador.lower())]
         nomJugador = nomJugador.capitalize()
-        if nDiners > 0:
+        if nDiners >= 0:
             jugadors[nomJugador]["diners"] = nDiners
         else:
             return "ERROR: Els diners no poden tenir un valor negatiu."
@@ -79,8 +79,12 @@ def TrucDinersBanca(nDiners):
     altresDades["diners banca"] = nDiners
     AfegirAHistorial(f"  Ara hi ha {nDiners}€ a la banca")
 
+def TrucAfegirEspecial(nomJugador):
+    AfegirAHistorial(f"  \"{nomJugador[0]}\" podrà sortir de la presó una vegada")
+    jugadors[nomJugador]["especial"].append("Sortir de la presó")
+
 def EscollirTrucs(IDCasellaActual, nomJugador):
-    lstTrucs = [r'anar a (\w+(.? \w+)*)', r'fixar nombre de cases a (\d+)', r'fixar nombre d\'hotels a (\d+)', r'seguent (\w+)', r'diners (\w+) (\d+)', r'diners (\d+) banca', r'acabar']
+    lstTrucs = [r'anar a (\w+(.? ?(\w|[àéèíóòú])+)*)', r'fixar cases a (\d+)', r'fixar hotels a (\d+)', r'seguent (\w+)', r'diners (\w+) (\d+)', r'diners (\d+) banca', r'afegir especial', r'acabar']
     AfegirAHistorial(f"  \"{nomJugador[0]}\" fa trampes")
 
     missatgeError = ""
@@ -89,7 +93,7 @@ def EscollirTrucs(IDCasellaActual, nomJugador):
         if missatgeError: 
             print(f"ERROR: {missatgeError}")
             missatgeError = ""
-        print(f"\"{nomJugador[0]}\" fa trampes, opcions:\n- anar a CASELLA\n- afegir X cases\n- afegir X hotels\n- seguent JUGADOR\n- diners JUGADOR DINERS\n- diners DINERS banca\n- acabar")
+        print(f"\"{nomJugador[0]}\" fa trampes, opcions:\n- anar a CASELLA\n- fixar cases a X\n- fixar hotels a X\n- seguent JUGADOR\n- diners JUGADOR DINERS\n- diners DINERS banca\n- afegir especial\n- acabar")
         opcio = input("Escull una opció: ")
         opcioValida = False
         for truc in lstTrucs:
@@ -121,5 +125,7 @@ def EscollirTrucs(IDCasellaActual, nomJugador):
                     nDiners = int(patroCoincident.group(1))
                     TrucDinersBanca(nDiners)
                 case 6:
+                    TrucAfegirEspecial(nomJugador)
+                case 7:
                     MostrarInterficie()
                     break

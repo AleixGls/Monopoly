@@ -26,8 +26,9 @@ def ComprarHotel(IDCasella, nomJugador):
 
 def Preus(IDCasella):
     c = caselles[IDCasella]
+    AfegirAHistorial(f"  Preu terreny: {c["comprar terreny"]}")
     AfegirAHistorial(f"  Preu casa: {c["comprar casa"]}")
-    AfegirAHistorial(f"  Preu casa: {c["comprar hotel"]}")
+    AfegirAHistorial(f"  Preu hotel: {c["comprar hotel"]}")
     MostrarInterficie()
 
 def CalculPreuBanc(nomJugador): # Funció auxiliar
@@ -36,7 +37,7 @@ def CalculPreuBanc(nomJugador): # Funció auxiliar
         for casella in caselles:
             if casella["nom"] == carrer:
                 c = casella
-                preu += (c["lloguer casa"] * c["nombre cases"] + c["lloguer hotel"] * c["nombre hotels"]) * 0.5
+                preu += (c["comprar terreny"] + c["lloguer casa"] * c["nombre cases"] + c["lloguer hotel"] * c["nombre hotels"]) * 0.5
     return preu
 def PreuBanc(nomJugador):
     AfegirAHistorial(f"  Si vens tot al banc guanyaràs {CalculPreuBanc(nomJugador)}€")
@@ -48,7 +49,7 @@ def CalculPreuJugador(nomJugador): # Funció auxiliar
         for casella in caselles:
             if casella["nom"] == carrer:
                 c = casella
-                preu += (c["lloguer casa"] * c["nombre cases"] + c["lloguer hotel"] * c["nombre hotels"]) * 0.9
+                preu += (c["comprar terreny"] + c["lloguer casa"] * c["nombre cases"] + c["lloguer hotel"] * c["nombre hotels"]) * 0.9
     return preu
 def PreuJugador(nomJugador):
     for jugador in jugadors:
@@ -56,7 +57,7 @@ def PreuJugador(nomJugador):
             AfegirAHistorial(f"  Si vens tot a \"{jugador[0]}\" guanyaràs {min(CalculPreuBanc(nomJugador),jugador["diners"])}€")
     MostrarInterficie()
 
-def VendreAlBanc(IDCasella, nomJugador):
+def VendreAlBanc(IDCasella, nomJugador, bancarrota = False):
     c = caselles[IDCasella]
     pagament = c["lloguer casa"] * c["nombre cases"] + c["lloguer hotel"] * c["nombre hotels"]
 
@@ -64,6 +65,7 @@ def VendreAlBanc(IDCasella, nomJugador):
         for casella in caselles:
             if casella["nom"] == carrer:
                 caselles[caselles.index(casella)]["propietari"] = "Banca"
+                jugadors[nomJugador]["carrers"].remove(casella["nom"])
                 caselles[caselles.index(casella)]["nombre cases"] = 0
                 caselles[caselles.index(casella)]["nombre hotels"] = 0
 
@@ -72,9 +74,14 @@ def VendreAlBanc(IDCasella, nomJugador):
     jugadors[nomJugador]["diners"] += preuVentaBanc
     AfegirAHistorial(f"  \"{nomJugador[0]}\" ven tot al banc per {preuVentaBanc}€")
 
-    jugadors[nomJugador]["diners"] -= pagament
-    jugadors[c["propietari"]]["diners"] += pagament
-    AfegirAHistorial(f"  \"{nomJugador[0]}\" paga {pagament}€ a \"{c["propietari"][0]}\"")
+    if bancarrota:
+        jugadors[c["propietari"]]["diners"] += jugadors[nomJugador]["diners"]
+        AfegirAHistorial(f"  \"{nomJugador[0]}\" paga {jugadors[nomJugador]["diners"]}€ a \"{c["propietari"][0]}\"")
+        jugadors[nomJugador]["diners"] = 0
+    else:
+        jugadors[nomJugador]["diners"] -= pagament
+        jugadors[c["propietari"]]["diners"] += pagament
+        AfegirAHistorial(f"  \"{nomJugador[0]}\" paga {pagament}€ a \"{c["propietari"][0]}\"")
     
 def VendreAJugador(IDCasella,nomJugadorVenedor,nomJugadorComprador):
     c = caselles[IDCasella]
@@ -129,7 +136,7 @@ def CaureEnCasellaCarrer(IDCasella, nomJugador):
                 lstJugsCompradorsPossibles = []
                 for jugadorComprador in jugadors:
                         if jugadorComprador != nomJugador and jugadors[jugadorComprador]["diners"] + jug["diners"] > pagament:
-                            lstJugsCompradorsPossibles.append(jugador)
+                            lstJugsCompradorsPossibles.append(jugadorComprador)
                 
                 if (CalculPreuBanc(nomJugador) + jug["diners"]) > pagament:
                     lstOpcions = ["preu banc","preu jugador","vendre al banc"]
@@ -141,8 +148,10 @@ def CaureEnCasellaCarrer(IDCasella, nomJugador):
                     for jugador in lstJugsCompradorsPossibles:
                         lstOpcions.append(f"vendre a {jugador}")
                 else:
+                    dif = pagament - jugadors[nomJugador]["diners"] - int(CalculPreuJugador(nomJugador))
                     AfegirAHistorial(f"  Fins i tot venent tot a un altre jugador,")
-                    AfegirAHistorial(f"  \"{nomJugador[0]}\" no pot pagar")
+                    AfegirAHistorial(f"  \"{nomJugador[0]}\" es queda a {dif}€ de poder pagar")
                     lstOpcions = ["declarar bancarrota"]
+        else: lstOpcions = []
 
     return lstOpcions

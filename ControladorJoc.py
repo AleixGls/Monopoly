@@ -8,7 +8,10 @@ from Trucs import EscollirTrucs
 #--------------------------------------------------------------------------------------------------
 
 def DeclararBancarrota(IDCasella, nomJugador):
-    pass
+    AfegirAHistorial(f"  \"{nomJugador}\" declara bancarrota")
+    VendreAlBanc(IDCasella, nomJugador, bancarrota = True)
+    jugadors[nomJugador]["diners"] = "BANCARROTA"
+    lstJugadors.remove(nomJugador)
 
 def MoureJugador(nomJugador):
     input(f"\"{nomJugador[0]}\", tira els daus! (polsa Intro)")
@@ -111,15 +114,16 @@ def RemplirDinersBanca():
         altresDades["diners banca"] += 1000000
 # -------------------------------------------------------------------------------------------------
 
+lstJugadors = AleatoritzarOrdreTurns()
 def IniciarJoc():
-    lstJugadors = AleatoritzarOrdreTurns()
-
     while True:
+        if len(lstJugadors) == 1: break
         for nomJugador in lstJugadors:
             if jugadors[nomJugador]["torn"] == altresDades["torn actual"]:
                 TornJugador(nomJugador); break
         altresDades["torn actual"] += 1
         if altresDades["torn actual"] == 4: altresDades["torn actual"] = 0
         RemplirDinersBanca()
+    print(f"Fi del joc. Ha guanyat {lstJugadors[0]}")
 
 IniciarJoc()
