@@ -1,13 +1,10 @@
 import random
 from Dades import *
-from Interficie import AfegirAHistorial
 from Interficie import MostrarInterficie
 #--------------------------------------------------------------------------------------------------
 
 def Sortida(nomJugador):
-    altresDades["diners banca"] -= 200
-    jugadors[nomJugador]["diners"] += 200
-    AfegirAHistorial(f"  \"{nomJugador[0]}\" guanya 200€")
+    Pagament("Banca",nomJugador,200,especial=True)
 
 def Sort(IDCasellaActual, nomJugador):
     match random.randint(1,6):
@@ -39,23 +36,20 @@ def Sort(IDCasellaActual, nomJugador):
             pagamentHotels = 0
             for carrer in jugadors[nomJugador]["carrers"]:
                 pagamentCarrers += 25
-                for casella in caselles:
-                    if casella["nom"] == carrer:
-                        pagamentHotels += 100 * casella["nombre hotels"]; break
+                c = BuscarCasellaSegonsNom(carrer)
+                pagamentHotels += 100 * c["nombre hotels"]; break
             AfegirAHistorial(f"  25€ per cada propietat: {pagamentCarrers}€")
             AfegirAHistorial(f"  100€ per cada hotel: {pagamentHotels}€")
 
             pagamentTotal = pagamentCarrers + pagamentHotels
-            jugadors[nomJugador]["diners"] -= pagamentTotal
-            altresDades["diners banca"] += pagamentTotal
-            AfegirAHistorial(f"  \"{nomJugador[0]}\" paga {pagamentTotal}€ a la banca")
+            Pagament(nomJugador, "Banca", pagamentTotal, especial=True)
         case 6:
             AfegirAHistorial(f"  Sort: Ets escollit alcalde")
 
-            for jugador, info in jugadors.items():
+            for jugador in jugadors:
                 if jugador != nomJugador:
-                    jugadors[jugador]["diners"] -= 50
-                    jugadors[nomJugador]["diners"] += 50
+                    Pagament(jugador, nomJugador, 50, especial=True)
+
             AfegirAHistorial(f"  Cada jugador paga 50€ a \"{nomJugador[0]}\"")
 
 def Caixa(IDCasellaActual, nomJugador):
@@ -68,29 +62,19 @@ def Caixa(IDCasellaActual, nomJugador):
             AnarPreso(IDCasellaActual, nomJugador)
         case 3:
             AfegirAHistorial(f"  Caixa: Error de la banca al teu favor")
-            altresDades["diners banca"] -= 150
-            jugadors[nomJugador]["diners"] += 150
-            AfegirAHistorial(f"  \"{nomJugador[0]}\" guanya 150€")
+            Pagament("Banca", nomJugador, 150, especial=True)
         case 4:
             AfegirAHistorial(f"  Caixa: Despeses mèdiques")
-            jugadors[nomJugador]["diners"] -= 50
-            altresDades["diners banca"] += 50
-            AfegirAHistorial(f"  \"{nomJugador[0]}\" paga 50€")
+            Pagament(nomJugador, "Banca", 50, especial=True)
         case 5:
             AfegirAHistorial(f"  Caixa: Despeses escolars")
-            jugadors[nomJugador]["diners"] -= 50
-            altresDades["diners banca"] += 50
-            AfegirAHistorial(f"  \"{nomJugador[0]}\" paga 50€")
+            Pagament(nomJugador, "Banca", 50, especial=True)
         case 6:
             AfegirAHistorial(f"  Caixa: Reparacions al carrer")
-            jugadors[nomJugador]["diners"] -= 40
-            altresDades["diners banca"] += 40
-            AfegirAHistorial(f"  \"{nomJugador[0]}\" paga 40€")
+            Pagament(nomJugador, "Banca", 40, especial=True)
         case 7:
             AfegirAHistorial(f"  Caixa: Concurs de bellesa")
-            altresDades["diners banca"] -= 10
-            jugadors[nomJugador]["diners"] += 10
-            AfegirAHistorial(f"  \"{nomJugador[0]}\" guanya 10€")
+            Pagament("Banca", nomJugador, 10, especial=True)
 
 def AnarPreso(IDCasellaActual,nomJugador):
     caselles[IDCasellaActual]["jugadors"].remove(nomJugador)

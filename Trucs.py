@@ -1,28 +1,27 @@
 import re
 from Dades import *
-from Interficie import AfegirAHistorial
 from Interficie import MostrarInterficie
 
 def TrucAnarA(IDCasellaActual, nomJugador, nomCasellaDesti):
-    ometrePrimera = False
+    casellaDesitjada = ""
     if nomCasellaDesti == "Sort" or nomCasellaDesti == "Caixa":
         while True:
             casellaDesitjada = input(f"Hi ha dues caselles anomenades \"{nomCasellaDesti}\". Vols anar a la primera o la segona? (escriu 1 o 2)")
             if casellaDesitjada == "1" or casellaDesitjada == "2": break
             print("Entrada invàlida. Escriu 1 o 2.")
-        if casellaDesitjada == "2": ometrePrimera = True
-
-    for casella in caselles:
-        if casella["nom"] == nomCasellaDesti or casella["nom curt"] == nomCasellaDesti:
-            if ometrePrimera: ometrePrimera = False; continue
-            caselles[IDCasellaActual]["jugadors"].remove(nomJugador)
-            IDCasellaDesti = caselles.index(casella)
-            jugadors[nomJugador]["ID_casella"] = IDCasellaDesti
-            casella["jugadors"].append(nomJugador)
-            AfegirAHistorial(f"  \"{nomJugador[0]}\" va a {casella["nom"]}")
-            return ""
+    if casellaDesitjada == "2": 
+        IDCasellaDesti = BuscarCasellaSegonsNom(nomCasellaDesti,retornarIndex=True, ometrePrimera=True)
+    else: 
+        IDCasellaDesti = BuscarCasellaSegonsNom(nomCasellaDesti,retornarIndex=True)
     
-    return f"  {nomCasellaDesti} no és una casella vàlida."
+    if IDCasellaDesti:
+        caselles[IDCasellaActual]["jugadors"].remove(nomJugador)
+        jugadors[nomJugador]["ID_casella"] = IDCasellaDesti
+        caselles[IDCasellaDesti]["jugadors"].append(nomJugador)
+        AfegirAHistorial(f"  \"{nomJugador[0]}\" va a {caselles[IDCasellaDesti]["nom"]}")
+        return ""
+    else:
+        return f"{nomCasellaDesti} no és una casella vàlida."
 
 def TrucFixarCases(IDCasellaActual, nCases):
     if caselles[IDCasellaActual]["tipus"] == "especial":
@@ -72,7 +71,7 @@ def TrucDinersJugador(nomJugador, nDiners):
             else:
                 jugadors[nomJugador]["diners"] = nDiners
         else:
-            return "ERROR: Els diners no poden tenir un valor negatiu."
+            return "Els diners no poden tenir un valor negatiu."
         AfegirAHistorial(f"  Ara \"{nomJugador[0]}\" té {nDiners}€")
         return ""
     else: 

@@ -1,5 +1,3 @@
-altresDades = {"diners banca": 1000000, "torn actual": 0}
-
 jugadors = {
     "Blau" : {
         "diners" : 2000,
@@ -339,3 +337,40 @@ caselles = [
         "fil_col_taulell": [5,6]
     }
 ]
+
+historialJoc = ["".ljust(44) for _ in range(14)]
+
+ordreTurns = ["Blau","Groc","Taronja","Vermell"]
+
+altresDades = {"diners banca": 1000000, "torn actual": 0}
+
+# Funcions auxiliars ------------------------------------------------------------------------------
+
+def AfegirAHistorial(missatge):
+    historialJoc.append(missatge.ljust(44))
+    if len(historialJoc) >= 14:
+        historialJoc.pop(0)
+
+def Pagament(pagador, cobrador, quantitat, venta=False, especial=False):
+    if pagador == "Banca":
+        altresDades["diners banca"] -= quantitat
+        jugadors[cobrador]["diners"] += quantitat
+        if venta: AfegirAHistorial(f"  \"{cobrador[0]}\" ven tot al banc per {quantitat}€")
+        elif especial: AfegirAHistorial(f"  \"{cobrador[0]}\" guanya {quantitat}€")
+    elif cobrador == "Banca":
+        jugadors[pagador]["diners"] -= quantitat
+        altresDades["diners banca"] += quantitat
+        if especial: AfegirAHistorial(f"  \"{pagador[0]}\" paga {quantitat}€ a la banca")
+    else:
+        jugadors[pagador]["diners"] -= quantitat
+        jugadors[cobrador]["diners"] += quantitat
+        if venta: AfegirAHistorial(f"  \"{cobrador[0]}\" ven tot a \"{pagador[0]}\" per {quantitat}€")
+        elif not(especial): AfegirAHistorial(f"  \"{pagador[0]}\" paga {quantitat}€ a \"{cobrador[0]}\"")
+
+def BuscarCasellaSegonsNom(nom,retornarIndex=False,ometrePrimera=False):
+    for i, casella in enumerate(caselles):
+        if casella["nom"] == nom or casella["nom curt"] == nom:
+            if ometrePrimera: ometrePrimera = False; continue
+            if retornarIndex: return i
+            else: return casella["nom"]
+    return False

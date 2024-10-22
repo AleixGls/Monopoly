@@ -118,19 +118,21 @@ def InfoDreta():
         if info['carrers'] == []: carrers = "(res)"
         else: carrers = ", ".join(info['carrers'])
         if info['especial'] == []: especial = "(res)"
-        else: especial = ", ".join(info['especial'])
+        else: 
+            lstEspecialsÚnics = []
+            for esp in info['especial']:
+                if esp not in lstEspecialsÚnics:
+                    quantitat = info['especial'].count(esp)
+                    if quantitat > 1:
+                        lstEspecialsÚnics.append(f"{esp} ({quantitat})")
+                    else:
+                        lstEspecialsÚnics.append(f"{esp}")
+            especial = ", ".join(lstEspecialsÚnics)
         if info['diners'] == "BANCARROTA": diners = "BANCARROTA"
         else: diners = f"{info['diners']}€"
         lstStrInfoDreta.extend([f"Jugador {jugador}:", f"Carrers: {carrers}", f"Diners: {diners}", f"Especial: {especial}",""])
     return lstStrInfoDreta
 #--------------------------------------------------------------------------------------------------
-
-historialJoc = ["".ljust(44) for _ in range(14)]
-
-def AfegirAHistorial(missatge):
-    historialJoc.append(missatge.ljust(44))
-    if len(historialJoc) >= 14:
-        historialJoc.pop(0)
 
 def InserirHistorialAlTaulell():
     taulell = Taulell()

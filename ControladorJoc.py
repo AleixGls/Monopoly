@@ -1,6 +1,5 @@
 import random
 from Dades import *
-from Interficie import AfegirAHistorial
 from Interficie import MostrarInterficie
 from FuncionsCasellesCarrer import *
 from FuncionsCasellesEspecials import *
@@ -13,7 +12,7 @@ def DeclararBancarrota(IDCasella, nomJugador):
     jugadors[nomJugador]["carrers"] = ["BANCARROTA"]
     jugadors[nomJugador]["diners"] = "BANCARROTA"
     jugadors[nomJugador]["especial"] = ["BANCARROTA"]
-    lstJugadors.remove(nomJugador)
+    ordreTurns.remove(nomJugador)
 
 def MoureJugador(nomJugador):
     input(f"\"{nomJugador[0]}\", tira els daus! (polsa Intro)")
@@ -102,30 +101,28 @@ def TornJugador(nomJugador):
 
 # Funcions auxiliars ------------------------------------------------------------------------------
 def AleatoritzarOrdreTurns():
-    lstJugadors = ["Blau","Groc","Taronja","Vermell"]
-    random.shuffle(lstJugadors)
+    random.shuffle(ordreTurns)
 
-    for i,jug in enumerate(lstJugadors):
+    for i,jug in enumerate(ordreTurns):
         jugadors[jug]["torn"] = i
     
-    caselles[0]["jugadors"] = lstJugadors.copy()
-    return lstJugadors
+    caselles[0]["jugadors"] = ordreTurns.copy()
 
 def RemplirDinersBanca():
     if altresDades["diners banca"] < 500000:
         altresDades["diners banca"] += 1000000
 # -------------------------------------------------------------------------------------------------
 
-lstJugadors = AleatoritzarOrdreTurns()
 def IniciarJoc():
+    AleatoritzarOrdreTurns()
     while True:
-        if len(lstJugadors) == 1: break
-        for nomJugador in lstJugadors:
+        if len(ordreTurns) == 1: break
+        for nomJugador in ordreTurns:
             if jugadors[nomJugador]["torn"] == altresDades["torn actual"]:
                 TornJugador(nomJugador); break
         altresDades["torn actual"] += 1
         if altresDades["torn actual"] == 4: altresDades["torn actual"] = 0
         RemplirDinersBanca()
-    print(f"Fi del joc. Ha guanyat {lstJugadors[0]}")
+    print(f"Fi del joc. Ha guanyat {ordreTurns[0]}")
 
 IniciarJoc()
