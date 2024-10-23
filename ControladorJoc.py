@@ -81,6 +81,7 @@ def TornJugador(nomJugador):
                         case "passar": break
                         case "comprar terreny": ComprarTerreny(IDCasellaDesti,nomJugador); break
                         case "comprar casa": ComprarCasa(IDCasellaDesti,nomJugador); break
+                        case "comprar hotel": ComprarHotel(IDCasellaDesti,nomJugador); break
                         case "preus": Preus(IDCasellaDesti)
                         case "preu banc": PreuBanc(nomJugador)
                         case "preu jugador": PreuJugador(nomJugador)
