@@ -71,8 +71,8 @@ def TornJugador(nomJugador):
             MostrarInterficie()
             if len(lstOpcions) > 1:
                 while True:
-                    print(f"Juga \"{nomJugador[0]}\", opcions: {", ".join(lstOpcions)}")
                     while True:
+                        print(f"Juga \"{nomJugador[0]}\", opcions: {", ".join(lstOpcions)}")
                         opcio = input("Escull una opció: ")
                         if opcio in lstOpcions or opcio == "trucs": break
                         MostrarInterficie()
