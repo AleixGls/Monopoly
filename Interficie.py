@@ -119,15 +119,20 @@ def InfoDreta():
         else: carrers = ", ".join(info['carrers'])
         if info['especial'] == []: especial = "(res)"
         else: 
-            lstEspecialsÚnics = []
+            lstEspecialsUnics = []
+            lstQuantitats = []
             for esp in info['especial']:
-                if esp not in lstEspecialsÚnics:
+                if esp not in lstEspecialsUnics:
+                    lstEspecialsUnics.append(esp)
                     quantitat = info['especial'].count(esp)
-                    if quantitat > 1:
-                        lstEspecialsÚnics.append(f"{esp} ({quantitat})")
-                    else:
-                        lstEspecialsÚnics.append(f"{esp}")
-            especial = ", ".join(lstEspecialsÚnics)
+                    lstQuantitats.append(quantitat)
+            lstEspsAmbQuantitats = []
+            for esp, quantitat in zip(lstEspecialsUnics,lstQuantitats):
+                if quantitat > 1:
+                    lstEspsAmbQuantitats.append(f"{esp} ({quantitat})")
+                else:
+                    lstEspsAmbQuantitats.append(f"{esp}")
+            especial = ", ".join(lstEspsAmbQuantitats)
         if info['diners'] == "BANCARROTA": diners = "BANCARROTA"
         else: diners = f"{info['diners']}€"
         lstStrInfoDreta.extend([f"Jugador {jugador}:", f"Carrers: {carrers}", f"Diners: {diners}", f"Especial: {especial}",""])
