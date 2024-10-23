@@ -116,7 +116,14 @@ def InfoDreta():
 
     for jugador, info in jugadorsOrdenats:
         if info['carrers'] == []: carrers = "(res)"
-        else: carrers = ", ".join(info['carrers'])
+        elif len(info['carrers']) >= 8:
+            carrersCurts = []
+            for carrer in info['carrers']:
+                c = BuscarCasellaSegonsNom(carrer)
+                carrersCurts.append(c['nom curt'])
+            carrers = ", ".join(carrersCurts)
+        else:
+            carrers = ", ".join(info['carrers'])
         if info['especial'] == []: especial = "(res)"
         else: 
             lstEspecialsUnics = []
