@@ -372,5 +372,5 @@ def BuscarCasellaSegonsNom(nom,retornarIndex=False,ometrePrimera=False):
         if casella["nom"] == nom or casella["nom curt"] == nom:
             if ometrePrimera: ometrePrimera = False; continue
             if retornarIndex: return i
-            else: return casella["nom"]
+            else: return casella
     return False
