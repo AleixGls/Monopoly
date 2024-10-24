@@ -1,7 +1,6 @@
 import random
 from Dades import *
 from Transferencies import Transferencia
-from Interficie import MostrarInterficie
 #--------------------------------------------------------------------------------------------------
 
 def Sortida(nomJugador):
