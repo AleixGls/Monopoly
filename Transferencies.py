@@ -27,7 +27,7 @@ def CalculPreuJugador(venedor): # Funció auxiliar
 def PreuJugador(venedor):
     for jugador in jugadors:
         if jugador != venedor:
-            AfegirAHistorial(f"  Si vens tot a \"{jugador[0]}\" guanyaràs {min(CalculPreuBanc(venedor),jugadors[jugador]["diners"])}€")
+            AfegirAHistorial(f"  Si vens tot a \"{jugador[0]}\" guanyaràs {min(CalculPreuJugador(venedor),jugadors[jugador]["diners"])}€")
     MostrarInterficie()
 
 def VendreAlBanc(venedor):
