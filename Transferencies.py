@@ -41,9 +41,9 @@ def VendreAlBanc(venedor):
     for carrer in jugadors[venedor]["carrers"]:
         IDCarrer = BuscarCasellaSegonsNom(carrer,retornarIndex=True)
         caselles[IDCarrer]["propietari"] = "Banca"
-        jugadors[venedor]["carrers"].remove(caselles[IDCarrer]["nom"])
         caselles[IDCarrer]["nombre cases"] = 0
         caselles[IDCarrer]["nombre hotels"] = 0
+    jugadors[venedor]["carrers"].clear()
 
     Transferencia("Banca",venedor,preuVentaBanc)
     AfegirAHistorial(f"\"{venedor[0]}\" ven tot al banc per {preuVentaBanc}€")
@@ -53,11 +53,11 @@ def VendreAJugador(venedor,comprador):
 
     for carrer in jugadors[venedor]["carrers"]:
         IDCarrer = BuscarCasellaSegonsNom(carrer,retornarIndex=True)
-        jugadors[venedor]["carrers"].remove(caselles[IDCarrer]["nom"])
         jugadors[comprador]["carrers"].append(caselles[IDCarrer]["nom"])
         caselles[IDCarrer]["propietari"] = comprador
+    jugadors[venedor]["carrers"].clear()
 
-    Transferencia(comprador,venedor,preuVentaJugador)
+    Transferencia(comprador,venedor,preuVentaJugador,vendreAJugador=True)
     AfegirAHistorial(f"\"{venedor[0]}\" ven tot a \"{comprador[0]}\" per {preuVentaJugador}€")
 
 def Insolvencia(pagador,cobrador,quantitat):
@@ -120,7 +120,7 @@ def Insolvencia(pagador,cobrador,quantitat):
     lstOpcions.clear()
     MostrarInterficie()
 
-def Transferencia(pagador, cobrador, quantitat, especial=False):
+def Transferencia(pagador, cobrador, quantitat, especial=False, vendreAJugador=False):
     if pagador == "Banca":
         altresDades["diners banca"] -= quantitat
         jugadors[cobrador]["diners"] += quantitat
@@ -138,4 +138,4 @@ def Transferencia(pagador, cobrador, quantitat, especial=False):
         else:
             jugadors[pagador]["diners"] -= quantitat
             jugadors[cobrador]["diners"] += quantitat
-            if not(especial): AfegirAHistorial(f"\"{pagador[0]}\" paga {quantitat}€ a \"{cobrador[0]}\"")
+            if not(especial) and not(vendreAjugador): AfegirAHistorial(f"\"{pagador[0]}\" paga {quantitat}€ a \"{cobrador[0]}\"")
