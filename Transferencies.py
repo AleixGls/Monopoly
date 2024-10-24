@@ -79,7 +79,7 @@ def Insolvencia(pagador,cobrador,quantitat):
         for jugador in lstJugsCompradorsPossibles:
             lstOpcions.append(f"vendre a {jugador}")
     else:
-        dif = quantitat - jugadors[pagador]["diners"] - int(CalculPreuJugador(pagador))
+        dif = quantitat - jugadors[pagador]["diners"] - min(CalculPreuJugador(pagador),jugadors[jugadorComprador]["diners"])
         AfegirAHistorial(f"  Fins i tot venent tot a un altre jugador,")
         AfegirAHistorial(f"  \"{pagador[0]}\" es queda a {dif}€ de poder pagar")
         MostrarInterficie()
