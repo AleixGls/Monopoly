@@ -2,7 +2,7 @@ from Dades import *
 from Interficie import MostrarInterficie
 
 def DeclararBancarrota(nomJugador):
-    AfegirAHistorial(f"  \"{nomJugador}\" declara bancarrota")
+    AfegirAHistorial(f"\"{nomJugador}\" declara bancarrota")
     if jugadors[nomJugador]["carrers"]:
         VendreAlBanc(nomJugador)
     jugadors[nomJugador]["bancarrota"] = True
@@ -17,7 +17,7 @@ def CalculPreuBanc(venedor): # Funció auxiliar
         preu = int(preu)
     return preu
 def PreuBanc(venedor):
-    AfegirAHistorial(f"  Si vens tot al banc guanyaràs {CalculPreuBanc(venedor)}€")
+    AfegirAHistorial(f"Si vens tot al banc guanyaràs {CalculPreuBanc(venedor)}€")
     MostrarInterficie()
 
 def CalculPreuJugador(venedor): # Funció auxiliar
@@ -31,7 +31,7 @@ def CalculPreuJugador(venedor): # Funció auxiliar
 def PreuJugador(venedor):
     for jugador in jugadors:
         if jugador != venedor:
-            AfegirAHistorial(f"  Si vens tot a \"{jugador[0]}\" guanyaràs {min(CalculPreuJugador(venedor),jugadors[jugador]["diners"])}€")
+            AfegirAHistorial(f"Si vens tot a \"{jugador[0]}\" guanyaràs {min(CalculPreuJugador(venedor),jugadors[jugador]["diners"])}€")
     MostrarInterficie()
 
 def VendreAlBanc(venedor):
@@ -44,7 +44,7 @@ def VendreAlBanc(venedor):
 
     preuVentaBanc = CalculPreuBanc(venedor)
     Transferencia("Banca",venedor,preuVentaBanc)
-    AfegirAHistorial(f"  \"{venedor[0]}\" ven tot al banc per {preuVentaBanc}€")
+    AfegirAHistorial(f"\"{venedor[0]}\" ven tot al banc per {preuVentaBanc}€")
 
 def VendreAJugador(venedor,comprador):
     for carrer in jugadors[venedor]["carrers"]:
@@ -55,14 +55,14 @@ def VendreAJugador(venedor,comprador):
 
     preuVentaJugador = min(CalculPreuJugador(venedor),jugadors[comprador]["diners"])
     Transferencia(comprador,venedor,preuVentaJugador)
-    AfegirAHistorial(f"  \"{venedor[0]}\" ven tot a \"{comprador[0]}\" per {preuVentaJugador}€")
+    AfegirAHistorial(f"\"{venedor[0]}\" ven tot a \"{comprador[0]}\" per {preuVentaJugador}€")
 
 def Insolvencia(pagador,cobrador,quantitat):
     if cobrador == "Banca":
-        AfegirAHistorial(f"  \"{pagador[0]}\" ha de pagar {quantitat}€ a la banca")
+        AfegirAHistorial(f"\"{pagador[0]}\" ha de pagar {quantitat}€ a la banca")
     else:
-        AfegirAHistorial(f"  \"{pagador[0]}\" ha de pagar {quantitat}€ a \"{cobrador[0]}\"")
-    AfegirAHistorial(f"  \"{pagador[0]}\" no té prou diners")
+        AfegirAHistorial(f"\"{pagador[0]}\" ha de pagar {quantitat}€ a \"{cobrador[0]}\"")
+    AfegirAHistorial(f"\"{pagador[0]}\" no té prou diners")
 
     lstJugsCompradorsPossibles = []
     for jugadorComprador in jugadors:
@@ -77,7 +77,7 @@ def Insolvencia(pagador,cobrador,quantitat):
         for jugador in lstJugsCompradorsPossibles:
             lstOpcions.append(f"vendre a {jugador}")
     elif lstJugsCompradorsPossibles:
-        AfegirAHistorial(f"  Vendre tot al banc no és prou per pagar")
+        AfegirAHistorial(f"Vendre tot al banc no és prou per pagar")
         lstOpcions = ["preu jugador"]
         for jugador in lstJugsCompradorsPossibles:
             lstOpcions.append(f"vendre a {jugador}")
@@ -91,8 +91,8 @@ def Insolvencia(pagador,cobrador,quantitat):
             AfegirAHistorial("  Cap jugador pot comprar-li tot")
         else:
             dif = quantitat - jugadors[pagador]["diners"] - CalculPreuJugador(pagador)
-            AfegirAHistorial(f"  Fins i tot venent tot a un altre jugador,")
-            AfegirAHistorial(f"  \"{pagador[0]}\" es queda a {dif}€ de poder pagar")
+            AfegirAHistorial(f"Fins i tot venent tot a un altre jugador,")
+            AfegirAHistorial(f"\"{pagador[0]}\" es queda a {dif}€ de poder pagar")
         MostrarInterficie()
         input(f"\"{pagador[0]}\", has de declarar bancarrota. (polsa Intro)")
         DeclararBancarrota(pagador)
@@ -120,7 +120,7 @@ def Transferencia(pagador, cobrador, quantitat, especial=False):
     if pagador == "Banca":
         altresDades["diners banca"] -= quantitat
         jugadors[cobrador]["diners"] += quantitat
-        if especial: AfegirAHistorial(f"  \"{cobrador[0]}\" guanya {quantitat}€")
+        if especial: AfegirAHistorial(f"\"{cobrador[0]}\" guanya {quantitat}€")
     else:
         if jugadors[pagador]["diners"] < quantitat:
             Insolvencia(pagador,cobrador,quantitat)
@@ -130,8 +130,8 @@ def Transferencia(pagador, cobrador, quantitat, especial=False):
         if cobrador == "Banca":
             jugadors[pagador]["diners"] -= quantitat
             altresDades["diners banca"] += quantitat
-            if especial: AfegirAHistorial(f"  \"{pagador[0]}\" paga {quantitat}€ a la banca")
+            if especial: AfegirAHistorial(f"\"{pagador[0]}\" paga {quantitat}€ a la banca")
         else:
             jugadors[pagador]["diners"] -= quantitat
             jugadors[cobrador]["diners"] += quantitat
-            if not(especial): AfegirAHistorial(f"  \"{pagador[0]}\" paga {quantitat}€ a \"{cobrador[0]}\"")
+            if not(especial): AfegirAHistorial(f"\"{pagador[0]}\" paga {quantitat}€ a \"{cobrador[0]}\"")

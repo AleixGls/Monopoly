@@ -12,18 +12,18 @@ def MoureJugador(nomJugador):
     dau1 = random.randint(1,6)
     dau2 = random.randint(1,6)
     moviment = dau1+dau2
-    AfegirAHistorial(f"> Juga \"{nomJugador[0]}\", ha sortit {dau1} i {dau2}")
+    AfegirAHistorial(f"Juga \"{nomJugador[0]}\", ha sortit {dau1} i {dau2}",iniciTurn=True)
     
     if jugadors[nomJugador]["és_presoner"] and dau1 != dau2:
         jugadors[nomJugador]["torns_presoner"] -= 1
         if jugadors[nomJugador]["torns_presoner"] == 0:
-            AfegirAHistorial(f"  \"{nomJugador[0]}\" ha sigut alliberat de la presó")
+            AfegirAHistorial(f"\"{nomJugador[0]}\" ha sigut alliberat de la presó")
             jugadors[nomJugador]["és_presoner"] = False
         else:
-            AfegirAHistorial(f"  \"{nomJugador[0]}\" romana a la presó, {jugadors[nomJugador]["torns_presoner"]} torns restants")
+            AfegirAHistorial(f"\"{nomJugador[0]}\" romana a la presó, {jugadors[nomJugador]["torns_presoner"]} torns restants")
     else:
         if jugadors[nomJugador]["és_presoner"]:
-            AfegirAHistorial(f"  \"{nomJugador[0]}\" surt de la presó")
+            AfegirAHistorial(f"\"{nomJugador[0]}\" surt de la presó")
             jugadors[nomJugador]["és_presoner"] = False
             jugadors[nomJugador]["torns_presoner"] = 0
         
@@ -36,7 +36,7 @@ def MoureJugador(nomJugador):
         
         jugadors[nomJugador]["ID_casella"] = IDCasellaDesti
         caselles[IDCasellaDesti]["jugadors"].append(nomJugador)
-        AfegirAHistorial(f"  \"{nomJugador[0]}\" avança fins {caselles[IDCasellaDesti]["nom"]}")
+        AfegirAHistorial(f"\"{nomJugador[0]}\" avança fins {caselles[IDCasellaDesti]["nom"]}")
 
 def TornJugador(nomJugador):
     MostrarInterficie()

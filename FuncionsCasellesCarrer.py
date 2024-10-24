@@ -9,24 +9,24 @@ def ComprarTerreny(IDCasella, nomJugador):
     caselles[IDCasella]["propietari"] = nomJugador
     jugadors[nomJugador]["carrers"].append(c["nom"])
     Transferencia(nomJugador, "Banca", preu)
-    AfegirAHistorial(f"  \"{nomJugador[0]}\" compra el terreny per {preu}€")
+    AfegirAHistorial(f"\"{nomJugador[0]}\" compra el terreny per {preu}€")
 def ComprarCasa(IDCasella, nomJugador):
     preu = caselles[IDCasella]["comprar casa"]
     caselles[IDCasella]["nombre cases"] += 1
     Transferencia(nomJugador, "Banca", preu)
-    AfegirAHistorial(f"  \"{nomJugador[0]}\" compra 1 casa per {preu}€")
+    AfegirAHistorial(f"\"{nomJugador[0]}\" compra 1 casa per {preu}€")
 def ComprarHotel(IDCasella, nomJugador):
     preu = caselles[IDCasella]["comprar hotel"]
     caselles[IDCasella]["nombre hotels"] += 1
     caselles[IDCasella]["nombre cases"] -= 2
     Transferencia(nomJugador, "Banca", preu)
-    AfegirAHistorial(f"  \"{nomJugador[0]}\" compra 1 hotel per {preu}€")
+    AfegirAHistorial(f"\"{nomJugador[0]}\" compra 1 hotel per {preu}€")
 
 def Preus(IDCasella):
     c = caselles[IDCasella]
-    AfegirAHistorial(f"  Preu terreny: {c["comprar terreny"]}")
-    AfegirAHistorial(f"  Preu casa: {c["comprar casa"]}")
-    AfegirAHistorial(f"  Preu hotel: {c["comprar hotel"]}")
+    AfegirAHistorial(f"Preu terreny: {c["comprar terreny"]}")
+    AfegirAHistorial(f"Preu casa: {c["comprar casa"]}")
+    AfegirAHistorial(f"Preu hotel: {c["comprar hotel"]}")
     MostrarInterficie()
 
 def CaureEnCasellaCarrer(IDCasella, nomJugador):

@@ -19,7 +19,7 @@ def TrucAnarA(IDCasellaActual, nomJugador, nomCasellaDesti):
         caselles[IDCasellaActual]["jugadors"].remove(nomJugador)
         jugadors[nomJugador]["ID_casella"] = IDCasellaDesti
         caselles[IDCasellaDesti]["jugadors"].append(nomJugador)
-        AfegirAHistorial(f"  \"{nomJugador[0]}\" va a {caselles[IDCasellaDesti]["nom"]}")
+        AfegirAHistorial(f"\"{nomJugador[0]}\" va a {caselles[IDCasellaDesti]["nom"]}")
         return ""
     else:
         return f"{nomCasellaDesti} no és una casella vàlida."
@@ -31,7 +31,7 @@ def TrucFixarCases(IDCasellaActual, nCases):
         caselles[IDCasellaActual]["nombre cases"] = nCases
         pluralFix = "cases"
         if nCases == 1: pluralFix = "casa"
-        AfegirAHistorial(f"  Ara {caselles[IDCasellaActual]["nom"]} té {nCases} {pluralFix}.")
+        AfegirAHistorial(f"Ara {caselles[IDCasellaActual]["nom"]} té {nCases} {pluralFix}.")
         return ""
     else: return f"El nombre de cases ha de ser entre 1 i 4." 
 
@@ -42,7 +42,7 @@ def TrucFixarHotels(IDCasellaActual, nHotels):
         caselles[IDCasellaActual]["nombre hotels"] = nHotels
         pluralFix = "hotels"
         if nHotels == 1: pluralFix = "hotel"
-        AfegirAHistorial(f"  Ara {caselles[IDCasellaActual]["nom"]} té {nHotels} {pluralFix}.")
+        AfegirAHistorial(f"Ara {caselles[IDCasellaActual]["nom"]} té {nHotels} {pluralFix}.")
         return ""
     else: return f"El nombre de hotels ha de ser entre 1 i 4." 
 
@@ -58,7 +58,7 @@ def TrucSeguentJugador(nomJugador):
                 if jugador == nomJugador:
                     altresDades["torn actual"] = info["torn"] - 1; break
 
-            AfegirAHistorial(f"  \"{nomJugador[0]}\" serà el següent jugador")
+            AfegirAHistorial(f"\"{nomJugador[0]}\" serà el següent jugador")
             return ""
     else: 
         return f"\"{nomJugador}\" no és un jugador vàlid."
@@ -74,22 +74,22 @@ def TrucDinersJugador(nomJugador, nDiners):
             return "Els diners no poden tenir un valor negatiu."
         else:
             jugadors[nomJugador]["diners"] = nDiners
-            AfegirAHistorial(f"  Ara \"{nomJugador[0]}\" té {nDiners}€")
+            AfegirAHistorial(f"Ara \"{nomJugador[0]}\" té {nDiners}€")
             return ""
     else: 
         return f"\"{nomJugador}\" no és un jugador vàlid."
 
 def TrucDinersBanca(nDiners):
     altresDades["diners banca"] = nDiners
-    AfegirAHistorial(f"  Ara hi ha {nDiners}€ a la banca")
+    AfegirAHistorial(f"Ara hi ha {nDiners}€ a la banca")
 
 def TrucObtenirEspecial(nomJugador):
-    AfegirAHistorial(f"  \"{nomJugador[0]}\" podrà sortir de la presó una vegada")
+    AfegirAHistorial(f"\"{nomJugador[0]}\" podrà sortir de la presó una vegada")
     jugadors[nomJugador]["especial"].append("Sortir de la presó")
 
 def EscollirTrucs(IDCasellaActual, nomJugador):
     lstTrucs = [r'anar a (\w+(.? ?(\w|[àéèíóòú])+)*)', r'fixar cases a (\d+)', r'fixar hotels a (\d+)', r'seguent (\w+)', r'diners (\w+) (\d+)', r'diners (\d+) banca', r'obtenir especial', r'acabar']
-    AfegirAHistorial(f"  \"{nomJugador[0]}\" fa trampes")
+    AfegirAHistorial(f"\"{nomJugador[0]}\" fa trampes")
 
     missatgeError = ""
     while True:

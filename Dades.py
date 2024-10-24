@@ -352,7 +352,9 @@ altresDades = {"diners banca": 1000000, "torn actual": 0}
 
 # Funcions auxiliars ------------------------------------------------------------------------------
 
-def AfegirAHistorial(missatge):
+def AfegirAHistorial(missatge, iniciTurn=False):
+    if iniciTurn: missatge = f"> {missatge}"
+    else: missatge = f"  {missatge}"
     historialJoc.append(missatge.ljust(44))
     if len(historialJoc) >= 14:
         historialJoc.pop(0)
