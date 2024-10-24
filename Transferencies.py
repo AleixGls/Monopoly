@@ -28,10 +28,11 @@ def CalculPreuJugador(venedor): # Funció auxiliar
     if preu * 10 % 10 == 0: #Si la part decimal és 0
         preu = int(preu)
     return preu
-def PreuJugador(venedor):
+def PreuJugador(venedor,lstJugsCompradorsPossibles):
     for jugador in jugadors:
         if jugador != venedor:
-            AfegirAHistorial(f"Si vens tot a \"{jugador[0]}\" guanyaràs {min(CalculPreuJugador(venedor),jugadors[jugador]["diners"])}€")
+            if jugador in lstJugsCompradorsPossibles:
+                AfegirAHistorial(f"Si vens tot a \"{jugador[0]}\" guanyaràs {min(CalculPreuJugador(venedor),jugadors[jugador]["diners"])}€")
     MostrarInterficie()
 
 def VendreAlBanc(venedor):
@@ -110,12 +111,13 @@ def Insolvencia(pagador,cobrador,quantitat):
                 print("Opció invàlida.")
         match opcio:
             case "preu banc": PreuBanc(pagador)
-            case "preu jugador": PreuJugador(pagador)
+            case "preu jugador": PreuJugador(pagador,lstJugsCompradorsPossibles)
             case "vendre al banc": VendreAlBanc(pagador); break
             case "vendre a Blau": VendreAJugador(pagador,"Blau"); break
             case "vendre a Groc": VendreAJugador(pagador,"Groc"); break
             case "vendre a Taronja": VendreAJugador(pagador,"Taronja"); break
             case "vendre a Vermell": VendreAJugador(pagador,"Vermell"); break
+    lstOpcions.clear()
     MostrarInterficie()
 
 def Transferencia(pagador, cobrador, quantitat, especial=False):
