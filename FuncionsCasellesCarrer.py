@@ -40,6 +40,7 @@ def CaureEnCasellaCarrer(IDCasella, nomJugador):
         lstOpcions.append("preus")
     
     elif c["propietari"] == nomJugador:
+        if c["nombre cases"] == 4 and c["nombre hotels"] == 2: return
         lstOpcions.append("passar")
         if c["nombre cases"] < 4 and jug["diners"] > c["comprar casa"]:
             lstOpcions.append("comprar casa")

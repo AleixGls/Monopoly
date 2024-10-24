@@ -78,7 +78,7 @@ def Insolvencia(pagador,cobrador,quantitat):
             lstOpcions.append(f"vendre a {jugador}")
     elif lstJugsCompradorsPossibles:
         AfegirAHistorial(f"Vendre tot al banc no és prou per pagar")
-        lstOpcions = ["preu jugador"]
+        lstOpcions.append("preu jugador")
         for jugador in lstJugsCompradorsPossibles:
             lstOpcions.append(f"vendre a {jugador}")
     else:
