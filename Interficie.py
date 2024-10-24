@@ -1,5 +1,5 @@
-from Dades import *
 import os
+from Dades import *
 
 # Funcions Auxiliars ------------------------------------------------------------------------------
 def MostrarCases(casella):
@@ -115,33 +115,37 @@ def InfoDreta():
     jugadorsOrdenats = sorted(jugadors.items(), key=lambda jugador: jugador[1]["torn"])
 
     for jugador, info in jugadorsOrdenats:
-        if info['carrers'] == []: carrers = "(res)"
-        elif len(info['carrers']) >= 8:
-            carrersCurts = []
-            for carrer in info['carrers']:
-                c = BuscarCasellaSegonsNom(carrer)
-                carrersCurts.append(c['nom curt'])
-            carrers = ", ".join(carrersCurts)
+        if info['bancarrota']:
+            carrers = "BANCARROTA"
+            especial = "BANCARROTA"
+            diners = "BANCARROTA"
         else:
-            carrers = ", ".join(info['carrers'])
-        if info['especial'] == []: especial = "(res)"
-        else: 
-            lstEspecialsUnics = []
-            lstQuantitats = []
-            for esp in info['especial']:
-                if esp not in lstEspecialsUnics:
-                    lstEspecialsUnics.append(esp)
-                    quantitat = info['especial'].count(esp)
-                    lstQuantitats.append(quantitat)
-            lstEspsAmbQuantitats = []
-            for esp, quantitat in zip(lstEspecialsUnics,lstQuantitats):
-                if quantitat > 1:
-                    lstEspsAmbQuantitats.append(f"{esp} ({quantitat})")
-                else:
-                    lstEspsAmbQuantitats.append(f"{esp}")
-            especial = ", ".join(lstEspsAmbQuantitats)
-        if info['diners'] == "BANCARROTA": diners = "BANCARROTA"
-        else: diners = f"{info['diners']}€"
+            if info['carrers'] == []: carrers = "(res)"
+            elif len(info['carrers']) >= 8:
+                carrersCurts = []
+                for carrer in info['carrers']:
+                    c = BuscarCasellaSegonsNom(carrer)
+                    carrersCurts.append(c['nom curt'])
+                carrers = ", ".join(carrersCurts)
+            else:
+                carrers = ", ".join(info['carrers'])
+            if info['especial'] == []: especial = "(res)"
+            else: 
+                lstEspecialsUnics = []
+                lstQuantitats = []
+                for esp in info['especial']:
+                    if esp not in lstEspecialsUnics:
+                        lstEspecialsUnics.append(esp)
+                        quantitat = info['especial'].count(esp)
+                        lstQuantitats.append(quantitat)
+                lstEspsAmbQuantitats = []
+                for esp, quantitat in zip(lstEspecialsUnics,lstQuantitats):
+                    if quantitat > 1:
+                        lstEspsAmbQuantitats.append(f"{esp} ({quantitat})")
+                    else:
+                        lstEspsAmbQuantitats.append(f"{esp}")
+                especial = ", ".join(lstEspsAmbQuantitats)
+            diners = f"{info['diners']}€"
         lstStrInfoDreta.extend([f"Jugador {jugador}:", f"Carrers: {carrers}", f"Diners: {diners}", f"Especial: {especial}",""])
     return lstStrInfoDreta
 #--------------------------------------------------------------------------------------------------

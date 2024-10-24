@@ -4,6 +4,7 @@ from Interficie import MostrarInterficie
 
 def TrucAnarA(IDCasellaActual, nomJugador, nomCasellaDesti):
     casellaDesitjada = ""
+    nomCasellaDesti = nomCasellaDesti.capitalize()
     if nomCasellaDesti == "Sort" or nomCasellaDesti == "Caixa":
         while True:
             casellaDesitjada = input(f"Hi ha dues caselles anomenades \"{nomCasellaDesti}\". Vols anar a la primera o la segona? (escriu 1 o 2)")
@@ -50,13 +51,15 @@ def TrucSeguentJugador(nomJugador):
         if nomJugador.lower() in ["b","g","t","v"]:
             nomJugador = ["blau","groc","taronja","vermell"][["b","g","t","v"].index(nomJugador.lower())]
         nomJugador = nomJugador.capitalize()
+        if jugadors[nomJugador]['bancarrota']:
+            return "No es pot donar el torn a un jugador en bancarrota."
+        else:
+            for jugador, info in jugadors.items():
+                if jugador == nomJugador:
+                    altresDades["torn actual"] = info["torn"] - 1; break
 
-        for jugador, info in jugadors.items():
-            if jugador == nomJugador:
-                altresDades["torn actual"] = info["torn"] - 1; break
-
-        AfegirAHistorial(f"  \"{nomJugador[0]}\" serà el següent jugador")
-        return ""
+            AfegirAHistorial(f"  \"{nomJugador[0]}\" serà el següent jugador")
+            return ""
     else: 
         return f"\"{nomJugador}\" no és un jugador vàlid."
 
@@ -65,15 +68,14 @@ def TrucDinersJugador(nomJugador, nDiners):
         if nomJugador.lower() in ["b","g","t","v"]:
             nomJugador = ["blau","groc","taronja","vermell"][["b","g","t","v"].index(nomJugador.lower())]
         nomJugador = nomJugador.capitalize()
-        if nDiners >= 0:
-            if jugadors[nomJugador]["diners"] == "BANCARROTA":
-                return "No es pot canviar els diners d'un jugador en bancarrota."
-            else:
-                jugadors[nomJugador]["diners"] = nDiners
-        else:
+        if jugadors[nomJugador]['bancarrota']:
+            return "No es pot canviar els diners d'un jugador en bancarrota."
+        elif nDiners < 0:
             return "Els diners no poden tenir un valor negatiu."
-        AfegirAHistorial(f"  Ara \"{nomJugador[0]}\" té {nDiners}€")
-        return ""
+        else:
+            jugadors[nomJugador]["diners"] = nDiners
+            AfegirAHistorial(f"  Ara \"{nomJugador[0]}\" té {nDiners}€")
+            return ""
     else: 
         return f"\"{nomJugador}\" no és un jugador vàlid."
 
@@ -81,12 +83,12 @@ def TrucDinersBanca(nDiners):
     altresDades["diners banca"] = nDiners
     AfegirAHistorial(f"  Ara hi ha {nDiners}€ a la banca")
 
-def TrucAfegirEspecial(nomJugador):
+def TrucObtenirEspecial(nomJugador):
     AfegirAHistorial(f"  \"{nomJugador[0]}\" podrà sortir de la presó una vegada")
     jugadors[nomJugador]["especial"].append("Sortir de la presó")
 
 def EscollirTrucs(IDCasellaActual, nomJugador):
-    lstTrucs = [r'anar a (\w+(.? ?(\w|[àéèíóòú])+)*)', r'fixar cases a (\d+)', r'fixar hotels a (\d+)', r'seguent (\w+)', r'diners (\w+) (\d+)', r'diners (\d+) banca', r'afegir especial', r'acabar']
+    lstTrucs = [r'anar a (\w+(.? ?(\w|[àéèíóòú])+)*)', r'fixar cases a (\d+)', r'fixar hotels a (\d+)', r'seguent (\w+)', r'diners (\w+) (\d+)', r'diners (\d+) banca', r'obtenir especial', r'acabar']
     AfegirAHistorial(f"  \"{nomJugador[0]}\" fa trampes")
 
     missatgeError = ""
@@ -95,7 +97,7 @@ def EscollirTrucs(IDCasellaActual, nomJugador):
         if missatgeError: 
             print(f"ERROR: {missatgeError}")
             missatgeError = ""
-        print(f"\"{nomJugador[0]}\" fa trampes, opcions:\n- anar a CASELLA\n- fixar cases a X\n- fixar hotels a X\n- seguent JUGADOR\n- diners JUGADOR DINERS\n- diners DINERS banca\n- afegir especial\n- acabar")
+        print(f"\"{nomJugador[0]}\" fa trampes, opcions:\n- anar a CASELLA\n- fixar cases a X\n- fixar hotels a X\n- seguent JUGADOR\n- diners JUGADOR DINERS\n- diners DINERS banca\n- obtenir especial\n- acabar")
         opcio = input("Escull una opció: ")
         opcioValida = False
         for truc in lstTrucs:
@@ -127,7 +129,7 @@ def EscollirTrucs(IDCasellaActual, nomJugador):
                     nDiners = int(patroCoincident.group(1))
                     TrucDinersBanca(nDiners)
                 case 6:
-                    TrucAfegirEspecial(nomJugador)
+                    TrucObtenirEspecial(nomJugador)
                 case 7:
                     MostrarInterficie()
                     break

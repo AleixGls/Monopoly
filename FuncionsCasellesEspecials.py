@@ -1,10 +1,11 @@
 import random
 from Dades import *
+from Transferencies import Transferencia
 from Interficie import MostrarInterficie
 #--------------------------------------------------------------------------------------------------
 
 def Sortida(nomJugador):
-    Pagament("Banca",nomJugador,200,especial=True)
+    Transferencia("Banca",nomJugador,200,especial=True)
 
 def Sort(IDCasellaActual, nomJugador):
     match random.randint(1,6):
@@ -42,13 +43,13 @@ def Sort(IDCasellaActual, nomJugador):
             AfegirAHistorial(f"  100€ per cada hotel: {pagamentHotels}€")
 
             pagamentTotal = pagamentCarrers + pagamentHotels
-            Pagament(nomJugador, "Banca", pagamentTotal, especial=True)
+            Transferencia(nomJugador, "Banca", pagamentTotal, especial=True)
         case 6:
             AfegirAHistorial(f"  Sort: Ets escollit alcalde")
 
             for jugador in jugadors:
                 if jugador != nomJugador:
-                    Pagament(jugador, nomJugador, 50, especial=True)
+                    Transferencia(jugador, nomJugador, 50, especial=True)
 
             AfegirAHistorial(f"  Cada jugador paga 50€ a \"{nomJugador[0]}\"")
 
@@ -62,19 +63,19 @@ def Caixa(IDCasellaActual, nomJugador):
             AnarPreso(IDCasellaActual, nomJugador)
         case 3:
             AfegirAHistorial(f"  Caixa: Error de la banca al teu favor")
-            Pagament("Banca", nomJugador, 150, especial=True)
+            Transferencia("Banca", nomJugador, 150, especial=True)
         case 4:
             AfegirAHistorial(f"  Caixa: Despeses mèdiques")
-            Pagament(nomJugador, "Banca", 50, especial=True)
+            Transferencia(nomJugador, "Banca", 50, especial=True)
         case 5:
             AfegirAHistorial(f"  Caixa: Despeses escolars")
-            Pagament(nomJugador, "Banca", 50, especial=True)
+            Transferencia(nomJugador, "Banca", 50, especial=True)
         case 6:
             AfegirAHistorial(f"  Caixa: Reparacions al carrer")
-            Pagament(nomJugador, "Banca", 40, especial=True)
+            Transferencia(nomJugador, "Banca", 40, especial=True)
         case 7:
             AfegirAHistorial(f"  Caixa: Concurs de bellesa")
-            Pagament("Banca", nomJugador, 10, especial=True)
+            Transferencia("Banca", nomJugador, 10, especial=True)
 
 def AnarPreso(IDCasellaActual,nomJugador):
     caselles[IDCasellaActual]["jugadors"].remove(nomJugador)
