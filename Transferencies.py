@@ -88,17 +88,17 @@ def Insolvencia(pagador,cobrador,quantitat):
         while True:
                 print(f"\"{pagador[0]}\", no pots pagar. Opcions: {", ".join(lstOpcions)}")
                 opcio = input("Escull una opció: ")
-                if opcio in lstOpcions or opcio == "trucs": break
+                if opcio in lstOpcions: break
                 MostrarInterficie()
                 print("Opció invàlida.")
         match opcio:
             case "preu banc": PreuBanc(pagador)
             case "preu jugador": PreuJugador(pagador)
             case "vendre al banc": VendreAlBanc(pagador); break
-            case "vendre a B": VendreAJugador(pagador,"Blau"); break
-            case "vendre a G": VendreAJugador(pagador,"Groc"); break
-            case "vendre a T": VendreAJugador(pagador,"Taronja"); break
-            case "vendre a V": VendreAJugador(pagador,"Vermell"); break
+            case "vendre a Blau": VendreAJugador(pagador,"Blau"); break
+            case "vendre a Groc": VendreAJugador(pagador,"Groc"); break
+            case "vendre a Taronja": VendreAJugador(pagador,"Taronja"); break
+            case "vendre a Vermell": VendreAJugador(pagador,"Vermell"); break
     MostrarInterficie()
 
 def Transferencia(pagador, cobrador, quantitat, especial=False):
