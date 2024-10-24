@@ -68,9 +68,12 @@ def Insolvencia(pagador,cobrador,quantitat):
     for jugadorComprador in jugadors:
             if jugadorComprador != pagador and min(CalculPreuJugador(pagador),jugadors[jugadorComprador]["diners"]) + jugadors[pagador]["diners"] > quantitat:
                 lstJugsCompradorsPossibles.append(jugadorComprador)
-    
+    lstOpcions.clear()
     if (CalculPreuBanc(pagador) + jugadors[pagador]["diners"]) > quantitat:
-        lstOpcions = ["preu banc","preu jugador","vendre al banc"]
+        lstOpcions.append("preu banc")
+        if lstJugsCompradorsPossibles:
+            lstOpcions.append("preu jugador")
+        lstOpcions.append("vendre al banc")
         for jugador in lstJugsCompradorsPossibles:
             lstOpcions.append(f"vendre a {jugador}")
     elif lstJugsCompradorsPossibles:
@@ -84,9 +87,12 @@ def Insolvencia(pagador,cobrador,quantitat):
             if jugadorComprador != pagador:
                 if dinersMax < jugadors[jugadorComprador]["diners"]:
                     dinersMax = jugadors[jugadorComprador]["diners"]
-        dif = quantitat - jugadors[pagador]["diners"] - min(CalculPreuJugador(pagador),dinersMax)
-        AfegirAHistorial(f"  Fins i tot venent tot a un altre jugador,")
-        AfegirAHistorial(f"  \"{pagador[0]}\" es queda a {dif}€ de poder pagar")
+        if CalculPreuJugador(pagador) > dinersMax:
+            AfegirAHistorial("Cap jugador pot comprar-li tot")
+        else:
+            dif = quantitat - jugadors[pagador]["diners"] - CalculPreuJugador(pagador)
+            AfegirAHistorial(f"  Fins i tot venent tot a un altre jugador,")
+            AfegirAHistorial(f"  \"{pagador[0]}\" es queda a {dif}€ de poder pagar")
         MostrarInterficie()
         input(f"\"{pagador[0]}\", has de declarar bancarrota. (polsa Intro)")
         DeclararBancarrota(pagador)
