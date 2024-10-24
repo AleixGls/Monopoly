@@ -18,6 +18,7 @@ def ComprarCasa(IDCasella, nomJugador):
 def ComprarHotel(IDCasella, nomJugador):
     preu = caselles[IDCasella]["comprar hotel"]
     caselles[IDCasella]["nombre hotels"] += 1
+    caselles[IDCasella]["nombre cases"] -= 2
     Transferencia(nomJugador, "Banca", preu)
     AfegirAHistorial(f"  \"{nomJugador[0]}\" compra 1 hotel per {preu}€")
 
