@@ -88,7 +88,7 @@ def Insolvencia(pagador,cobrador,quantitat):
                 if dinersMax < jugadors[jugadorComprador]["diners"]:
                     dinersMax = jugadors[jugadorComprador]["diners"]
         if CalculPreuJugador(pagador) > dinersMax:
-            AfegirAHistorial("Cap jugador pot comprar-li tot")
+            AfegirAHistorial("  Cap jugador pot comprar-li tot")
         else:
             dif = quantitat - jugadors[pagador]["diners"] - CalculPreuJugador(pagador)
             AfegirAHistorial(f"  Fins i tot venent tot a un altre jugador,")
