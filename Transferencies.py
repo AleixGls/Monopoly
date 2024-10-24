@@ -138,4 +138,4 @@ def Transferencia(pagador, cobrador, quantitat, especial=False, vendreAJugador=F
         else:
             jugadors[pagador]["diners"] -= quantitat
             jugadors[cobrador]["diners"] += quantitat
-            if not(especial) and not(vendreAjugador): AfegirAHistorial(f"\"{pagador[0]}\" paga {quantitat}€ a \"{cobrador[0]}\"")
+            if not(especial) and not(vendreAJugador): AfegirAHistorial(f"\"{pagador[0]}\" paga {quantitat}€ a \"{cobrador[0]}\"")
