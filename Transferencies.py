@@ -13,6 +13,8 @@ def CalculPreuBanc(venedor): # Funció auxiliar
     for carrer in jugadors[venedor]["carrers"]:
         c = BuscarCasellaSegonsNom(carrer)
         preu += (c["comprar terreny"] + c["lloguer casa"] * c["nombre cases"] + c["lloguer hotel"] * c["nombre hotels"]) * 0.5
+    if preu * 10 % 10 == 0: #Si la part decimal és 0
+        preu = int(preu)
     return preu
 def PreuBanc(venedor):
     AfegirAHistorial(f"  Si vens tot al banc guanyaràs {CalculPreuBanc(venedor)}€")
@@ -23,6 +25,8 @@ def CalculPreuJugador(venedor): # Funció auxiliar
     for carrer in jugadors[venedor]["carrers"]:
         c = BuscarCasellaSegonsNom(carrer)
         preu += (c["comprar terreny"] + c["lloguer casa"] * c["nombre cases"] + c["lloguer hotel"] * c["nombre hotels"]) * 0.9
+    if preu * 10 % 10 == 0: #Si la part decimal és 0
+        preu = int(preu)
     return preu
 def PreuJugador(venedor):
     for jugador in jugadors:
