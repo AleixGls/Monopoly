@@ -35,6 +35,8 @@ def PreuJugador(venedor):
     MostrarInterficie()
 
 def VendreAlBanc(venedor):
+    preuVentaBanc = CalculPreuBanc(venedor)
+
     for carrer in jugadors[venedor]["carrers"]:
         IDCarrer = BuscarCasellaSegonsNom(carrer,retornarIndex=True)
         caselles[IDCarrer]["propietari"] = "Banca"
@@ -42,18 +44,18 @@ def VendreAlBanc(venedor):
         caselles[IDCarrer]["nombre cases"] = 0
         caselles[IDCarrer]["nombre hotels"] = 0
 
-    preuVentaBanc = CalculPreuBanc(venedor)
     Transferencia("Banca",venedor,preuVentaBanc)
     AfegirAHistorial(f"\"{venedor[0]}\" ven tot al banc per {preuVentaBanc}€")
 
 def VendreAJugador(venedor,comprador):
+    preuVentaJugador = min(CalculPreuJugador(venedor),jugadors[comprador]["diners"])
+
     for carrer in jugadors[venedor]["carrers"]:
         IDCarrer = BuscarCasellaSegonsNom(carrer,retornarIndex=True)
         jugadors[venedor]["carrers"].remove(caselles[IDCarrer]["nom"])
         jugadors[comprador]["carrers"].append(caselles[IDCarrer]["nom"])
         caselles[IDCarrer]["propietari"] = comprador
 
-    preuVentaJugador = min(CalculPreuJugador(venedor),jugadors[comprador]["diners"])
     Transferencia(comprador,venedor,preuVentaJugador)
     AfegirAHistorial(f"\"{venedor[0]}\" ven tot a \"{comprador[0]}\" per {preuVentaJugador}€")
 
